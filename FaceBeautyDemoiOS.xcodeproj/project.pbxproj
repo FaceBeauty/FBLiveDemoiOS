@@ -660,7 +660,6 @@
 		1E201A0A292DF0280072EE85 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E3DB252292E2DEA0078295E /* FBCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCaptureSessionManager.h; sourceTree = "<group>"; };
 		1E3DB253292E2DEA0078295E /* FBCaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCaptureSessionManager.m; sourceTree = "<group>"; };
-		75574078230F7DFC00F7591C /* HTEffect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = HTEffect.app; path = "/Users/maca1003_store/Documents/Projects/FaceBeauty/iOS/test/FBLiveDemoiOS/build/Debug-iphoneos/HTEffect.app"; sourceTree = "<absolute>"; };
 		75FCB27E23274CB100BCCA66 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		75FCB28023274CBD00BCCA66 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E0EF96082D7A93B900404A94 /* FBFunContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBFunContentView.h; sourceTree = "<group>"; };
@@ -1304,6 +1303,7 @@
 		E0EF9F302D7AA31E00404A94 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
 		E0EF9F312D7AA31E00404A94 /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Masonry.framework; sourceTree = "<group>"; };
 		E0EF9F322D7AA31E00404A94 /* SSZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = "<group>"; };
+		E0EFDB572D8AC60100404A94 /* FaceBeautyDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceBeautyDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3505C9925E4DB04004C81ED /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E3505C9B25E4DB1A004C81ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -1366,6 +1366,7 @@
 		75574079230F7DFC00F7591C /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				E0EFDB572D8AC60100404A94 /* FaceBeautyDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2199,7 +2200,7 @@
 			);
 			name = FaceBeautyDemoiOS;
 			productName = TiSDKDemo;
-			productReference = 75574078230F7DFC00F7591C /* HTEffect.app */;
+			productReference = E0EFDB572D8AC60100404A94 /* FaceBeautyDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -3012,13 +3013,13 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HTEffectDemoiOS/HTEffect",
-					"$(PROJECT_DIR)/HTEffectDemoiOS/HTEffect/HTUI/HTOther",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect/HTUI/HTOther",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect/HTUI/HTOther/HTEffect_Demo_iOS/HTEffectDemoiOS/HTEffect",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect/HTUI/HTOther/HTEffect_Demo_iOS/HTEffectDemoiOS/HTEffect/HTUI/HTOther",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/HTUI/HTOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty/FBUI/FBOther/FaceBeauty_Demo_iOS/FaceBeautyDemoiOS/FaceBeauty",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty/FBUI/FBOther/FaceBeauty_Demo_iOS/FBEffectDemoiOS/FaceBeauty/FBUI/FBOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
 					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect",
 					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
 				);
@@ -3037,8 +3038,8 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nimo.facebeauty;
-				PRODUCT_NAME = HTEffect;
-				SWIFT_OBJC_BRIDGING_HEADER = "HTEffectDemoiOS/ViewController/HTEffectDemoiOS-Bridging-Header.h";
+				PRODUCT_NAME = FaceBeautyDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "FaceBeautyDemoiOS/ViewController/FaceBeautyDemoiOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3057,13 +3058,13 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HTEffectDemoiOS/HTEffect",
-					"$(PROJECT_DIR)/HTEffectDemoiOS/HTEffect/HTUI/HTOther",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect/HTUI/HTOther",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect/HTUI/HTOther/HTEffect_Demo_iOS/HTEffectDemoiOS/HTEffect",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect/HTUI/HTOther/HTEffect_Demo_iOS/HTEffectDemoiOS/HTEffect/HTUI/HTOther",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/HTEffect",
-					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/HTUI/HTOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty/FBUI/FBOther/FaceBeauty_Demo_iOS/FaceBeautyDemoiOS/FaceBeauty",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty/FBUI/FBOther/FaceBeauty_Demo_iOS/FBEffectDemoiOS/FaceBeauty/FBUI/FBOther",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FaceBeauty",
+					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
 					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect",
 					"$(PROJECT_DIR)/FaceBeautyDemoiOS/FBEffect/FBUI/FBOther",
 				);
@@ -3081,8 +3082,8 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nimo.facebeauty;
-				PRODUCT_NAME = HTEffect;
-				SWIFT_OBJC_BRIDGING_HEADER = "HTEffectDemoiOS/ViewController/HTEffectDemoiOS-Bridging-Header.h";
+				PRODUCT_NAME = FaceBeautyDemo;
+				SWIFT_OBJC_BRIDGING_HEADER = "FaceBeautyDemoiOS/ViewController/FaceBeautyDemoiOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
