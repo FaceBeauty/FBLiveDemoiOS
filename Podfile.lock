@@ -1,0 +1,16 @@
+PODS:
+  - FaceBeauty (4.0.0-rc)
+
+DEPENDENCIES:
+  - FaceBeauty (= 4.0.0-rc)
+
+SPEC REPOS:
+  trunk:
+    - FaceBeauty
+
+SPEC CHECKSUMS:
+  FaceBeauty: 991000212448b93edb6b3db4a7b38ab90b3579c7
+
+PODFILE CHECKSUM: 32295d554d493855f86bed8c1c2393b82a6fd306
+
+COCOAPODS: 1.16.2

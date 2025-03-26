@@ -16,6 +16,7 @@
 		1E201E3F292DF0280072EE85 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E201A05292DF0280072EE85 /* HomeViewController.m */; };
 		1E3DB254292E2DEA0078295E /* FBCaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E3DB253292E2DEA0078295E /* FBCaptureSessionManager.m */; };
 		75FCB27F23274CB100BCCA66 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FCB27E23274CB100BCCA66 /* libc++.tbd */; };
+		AAFE1F60820BA0213840553F /* Pods_FaceBeautyDemoiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 701869E88724088FCCE35D95 /* Pods_FaceBeautyDemoiOS.framework */; };
 		E0EF9A8D2D7A93B900404A94 /* CustomWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EF9A862D7A93B900404A94 /* CustomWindow.m */; };
 		E0EF9A922D7A93B900404A94 /* FBFunContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EF96092D7A93B900404A94 /* FBFunContentView.m */; };
 		E0EF9A932D7A93B900404A94 /* UIButton+HTImagePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EF97C62D7A93B900404A94 /* UIButton+HTImagePosition.m */; };
@@ -619,8 +620,6 @@
 		E0EF9EF12D7A9E2500404A94 /* FBRestoreAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EF9EE82D7A9E2500404A94 /* FBRestoreAlertView.m */; };
 		E0EF9F1E2D7A9F7600404A94 /* FBOptionalView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EF9F162D7A9F7600404A94 /* FBOptionalView.m */; };
 		E0EF9F1F2D7A9F7600404A94 /* FBMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EF9F142D7A9F7600404A94 /* FBMenuCell.m */; };
-		E0EF9F2A2D7AA21100404A94 /* FaceBeauty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF9F262D7AA1DF00404A94 /* FaceBeauty.framework */; };
-		E0EF9F2B2D7AA21100404A94 /* FaceBeauty.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF9F262D7AA1DF00404A94 /* FaceBeauty.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E0EF9F362D7AA32300404A94 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF9F302D7AA31E00404A94 /* AFNetworking.framework */; };
 		E0EF9F372D7AA32300404A94 /* AFNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF9F302D7AA31E00404A94 /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E0EF9F382D7AA32600404A94 /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EF9F312D7AA31E00404A94 /* Masonry.framework */; };
@@ -636,7 +635,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E0EF9F2B2D7AA21100404A94 /* FaceBeauty.framework in Embed Frameworks */,
 				E0EF9F3B2D7AA32800404A94 /* SSZipArchive.framework in Embed Frameworks */,
 				E0EF9F372D7AA32300404A94 /* AFNetworking.framework in Embed Frameworks */,
 				E0EF9F392D7AA32600404A94 /* Masonry.framework in Embed Frameworks */,
@@ -660,8 +658,11 @@
 		1E201A0A292DF0280072EE85 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E3DB252292E2DEA0078295E /* FBCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCaptureSessionManager.h; sourceTree = "<group>"; };
 		1E3DB253292E2DEA0078295E /* FBCaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCaptureSessionManager.m; sourceTree = "<group>"; };
+		701869E88724088FCCE35D95 /* Pods_FaceBeautyDemoiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaceBeautyDemoiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75FCB27E23274CB100BCCA66 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		75FCB28023274CBD00BCCA66 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		9DD8877AD3EE51E2816E21C4 /* Pods-FaceBeautyDemoiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceBeautyDemoiOS.debug.xcconfig"; path = "Target Support Files/Pods-FaceBeautyDemoiOS/Pods-FaceBeautyDemoiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		BCAEABF88B2D89175AE7C191 /* Pods-FaceBeautyDemoiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceBeautyDemoiOS.release.xcconfig"; path = "Target Support Files/Pods-FaceBeautyDemoiOS/Pods-FaceBeautyDemoiOS.release.xcconfig"; sourceTree = "<group>"; };
 		E0EF96082D7A93B900404A94 /* FBFunContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBFunContentView.h; sourceTree = "<group>"; };
 		E0EF96092D7A93B900404A94 /* FBFunContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBFunContentView.m; sourceTree = "<group>"; };
 		E0EF960A2D7A93B900404A94 /* FBFunContentViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBFunContentViewCell.h; sourceTree = "<group>"; };
@@ -1299,7 +1300,6 @@
 		E0EF9F142D7A9F7600404A94 /* FBMenuCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBMenuCell.m; sourceTree = "<group>"; };
 		E0EF9F152D7A9F7600404A94 /* FBOptionalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBOptionalView.h; sourceTree = "<group>"; };
 		E0EF9F162D7A9F7600404A94 /* FBOptionalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBOptionalView.m; sourceTree = "<group>"; };
-		E0EF9F262D7AA1DF00404A94 /* FaceBeauty.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FaceBeauty.framework; sourceTree = "<group>"; };
 		E0EF9F302D7AA31E00404A94 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
 		E0EF9F312D7AA31E00404A94 /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Masonry.framework; sourceTree = "<group>"; };
 		E0EF9F322D7AA31E00404A94 /* SSZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = "<group>"; };
@@ -1316,9 +1316,9 @@
 				E0EF9F362D7AA32300404A94 /* AFNetworking.framework in Frameworks */,
 				E0EF9F3A2D7AA32800404A94 /* SSZipArchive.framework in Frameworks */,
 				E0EF9F382D7AA32600404A94 /* Masonry.framework in Frameworks */,
-				E0EF9F2A2D7AA21100404A94 /* FaceBeauty.framework in Frameworks */,
 				75FCB27F23274CB100BCCA66 /* libc++.tbd in Frameworks */,
 				E0EF9EBD2D7A9A4400404A94 /* AssetsLibrary.framework in Frameworks */,
+				AAFE1F60820BA0213840553F /* Pods_FaceBeautyDemoiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1360,6 +1360,7 @@
 				1E20156F292DF0270072EE85 /* FaceBeautyDemoiOS */,
 				75574079230F7DFC00F7591C /* Products */,
 				75FCB27D23274CB100BCCA66 /* Frameworks */,
+				F21FE243616EFD5CF1290594 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1378,6 +1379,7 @@
 				E3505C9925E4DB04004C81ED /* AVFoundation.framework */,
 				75FCB28023274CBD00BCCA66 /* AssetsLibrary.framework */,
 				75FCB27E23274CB100BCCA66 /* libc++.tbd */,
+				701869E88724088FCCE35D95 /* Pods_FaceBeautyDemoiOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2139,7 +2141,6 @@
 		E0EF9A8C2D7A93B900404A94 /* FBEffect */ = {
 			isa = PBXGroup;
 			children = (
-				E0EF9F262D7AA1DF00404A94 /* FaceBeauty.framework */,
 				E0EF9A892D7A93B900404A94 /* FBUI */,
 				E0EF9A8A2D7A93B900404A94 /* FaceBeauty.bundle */,
 			);
@@ -2182,6 +2183,16 @@
 			path = FBOptional;
 			sourceTree = "<group>";
 		};
+		F21FE243616EFD5CF1290594 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9DD8877AD3EE51E2816E21C4 /* Pods-FaceBeautyDemoiOS.debug.xcconfig */,
+				BCAEABF88B2D89175AE7C191 /* Pods-FaceBeautyDemoiOS.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2189,10 +2200,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7557408E230F7DFE00F7591C /* Build configuration list for PBXNativeTarget "FaceBeautyDemoiOS" */;
 			buildPhases = (
+				8E6A3E3AC60D2028847EEE47 /* [CP] Check Pods Manifest.lock */,
 				75574074230F7DFC00F7591C /* Sources */,
 				75574075230F7DFC00F7591C /* Frameworks */,
 				75574076230F7DFC00F7591C /* Resources */,
 				1E2348E729FB61860051EEF8 /* Embed Frameworks */,
+				91785369DFE67F9F96DA4F5A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2818,6 +2831,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8E6A3E3AC60D2028847EEE47 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FaceBeautyDemoiOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		91785369DFE67F9F96DA4F5A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FaceBeautyDemoiOS/Pods-FaceBeautyDemoiOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FaceBeautyDemoiOS/Pods-FaceBeautyDemoiOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FaceBeautyDemoiOS/Pods-FaceBeautyDemoiOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		75574074230F7DFC00F7591C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -3003,6 +3058,7 @@
 		};
 		7557408F230F7DFE00F7591C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DD8877AD3EE51E2816E21C4 /* Pods-FaceBeautyDemoiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -3048,6 +3104,7 @@
 		};
 		75574090230F7DFE00F7591C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCAEABF88B2D89175AE7C191 /* Pods-FaceBeautyDemoiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

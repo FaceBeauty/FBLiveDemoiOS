@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1410"
+   LastUpgradeVersion = "1600"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "75574077230F7DFC00F7591C"
-               BuildableName = "FaceBeautyDemo.app"
-               BlueprintName = "FaceBeautyDemoiOS"
-               ReferencedContainer = "container:FaceBeautyDemoiOS.xcodeproj">
+               BlueprintIdentifier = "D8EB6C737BDC64CCDFF433E9490850B5"
+               BuildableName = "Pods_FaceBeautyDemoiOS.framework"
+               BlueprintName = "Pods-FaceBeautyDemoiOS"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,16 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "75574077230F7DFC00F7591C"
-            BuildableName = "FaceBeautyDemo.app"
-            BlueprintName = "FaceBeautyDemoiOS"
-            ReferencedContainer = "container:FaceBeautyDemoiOS.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -57,16 +47,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "75574077230F7DFC00F7591C"
-            BuildableName = "FaceBeautyDemo.app"
-            BlueprintName = "FaceBeautyDemoiOS"
-            ReferencedContainer = "container:FaceBeautyDemoiOS.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
