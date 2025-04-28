@@ -1,16 +1,16 @@
 PODS:
-  - FaceBeauty (4.0.0-rc)
+  - FaceBeauty (4.0.1)
 
 DEPENDENCIES:
-  - FaceBeauty (= 4.0.0-rc)
+  - FaceBeauty
 
 SPEC REPOS:
   trunk:
     - FaceBeauty
 
 SPEC CHECKSUMS:
-  FaceBeauty: 991000212448b93edb6b3db4a7b38ab90b3579c7
+  FaceBeauty: 29863670bac62cf75d7add7d82724937f7b92dd5
 
-PODFILE CHECKSUM: 32295d554d493855f86bed8c1c2393b82a6fd306
+PODFILE CHECKSUM: 91d9eb1b4d0a815b3007471bb9770b5245f5d74c
 
 COCOAPODS: 1.16.2
