@@ -36,9 +36,12 @@
 }
 
 - (void)onClick:(UIButton *)sender{
-    CameraViewController *CVC = [[CameraViewController alloc] init];
-    CVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:CVC animated:YES completion:nil];
+    // function：0:美颜；1：贴纸；2：滤镜
+    CameraViewController *CVC = [[CameraViewController alloc] initWithFunction:0];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:CVC];
+    nav.navigationBarHidden = YES;
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 @end

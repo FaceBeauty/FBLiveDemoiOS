@@ -15,6 +15,8 @@
 
 @property (nonatomic, assign) BOOL isRenderInit;
 
+@property (nonatomic, assign) int functionIndex;
+
 @property (nonatomic, strong) CIImage *outputImage;
 @property (nonatomic, assign) CVPixelBufferRef outputImagePixelBuffer;
 
@@ -32,6 +34,15 @@
     return _htLiveView;
 }
 
+#pragma mark - 初始化
+- (instancetype)initWithFunction:(int)index{
+    self = [super init];
+    if (self) {
+        self.functionIndex = index;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -47,7 +58,17 @@
     }
     [[FBCaptureSessionManager shareManager] startAVCaptureDelegate:self];
     [[FBUIManager shareManager] loadToWindowDelegate:self];
-    [[FBUIManager shareManager] showBeautyView];
+    
+    if (self.functionIndex == 0) {
+        [[FBUIManager shareManager] showBeautyView];
+    }else{
+        if (self.functionIndex == 1) {
+            [[FBUIManager shareManager] showFunView:FBItemSticker];
+        }else if (self.functionIndex == 2) {
+            [[FBUIManager shareManager] showFunView:FBItemMask];
+        }
+    }
+    
     //todo --- facebeauty end ---
     
     [self.view addSubview:[FBUIManager shareManager].defaultButton];

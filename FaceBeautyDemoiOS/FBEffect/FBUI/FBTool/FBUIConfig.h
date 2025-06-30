@@ -136,7 +136,7 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define kSafeAreaBottom \
 ^(){\
    if (@available(iOS 11.0, *)) {\
-     return  (CGFloat)UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom;\
+     return  (CGFloat)[[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom;\
     } else {\
      return  (CGFloat)0.f;\
     }\
