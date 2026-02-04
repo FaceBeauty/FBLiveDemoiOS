@@ -49,7 +49,7 @@
             "icon": "clarity.png",
             "selectedIcon":"clarity_selected.png",
             "key":"HT_SKIN_CLARITY_SLIDER",
-            "defaultValue":0,
+            "defaultValue":30,
             "sliderType":1
         },
         {

@@ -217,7 +217,7 @@
             "icon": "headSmaller.png",
             "selectedIcon":"headSmaller_selected.png",
             "key":"HT_FACE_HEADSMALLER_SLIDER",
-            "defaultValue":0,
+            "defaultValue":50,
             "sliderType":1
         },
         {

@@ -2,16 +2,24 @@
 //  FBUIManager.m
 //  FaceBeautyDemo
 //
+//  Created by Texeljoy Tech on 2022/7/18.
 //
 
 #import "FBUIManager.h"
 #import "FBOptionalView.h"
 #import "FBBeautyView.h"
+#import "FBARItemView.h"
+#import "FBMattingView.h"
+#import "FBGestureView.h"
+#import "FBMakeupView.h"
+#import "FBHairView.h"
+#import "FBBodyView.h"
 #import "FBTool.h"
 #import "FBFilterView.h"
 #import "FBRestoreAlertView.h"
 #import "FBLandmarkView.h"
 #import "FBFunContentView.h"
+#import "FBLightMakeupView.h"
 
 @interface FBUIManager ()<FBRestoreAlertViewDelegate>
 
@@ -26,13 +34,16 @@
 // 功能选择视图
 @property (nonatomic, strong) FBOptionalView *optionalView;
 @property (nonatomic, strong) FBBeautyView *beautyView;
-//@property (nonatomic, strong) HTARItemView *itemView;
-//@property (nonatomic, strong) HTGestureView* gestureView;
-//@property (nonatomic, strong) HTMattingView* mattingView;
-@property (nonatomic, strong) FBFilterView* filterView;
-//@property (nonatomic, strong) HTMakeupView *makeupView;
-//@property (nonatomic, strong) HTHairView *hairView;
-//@property (nonatomic, strong) HTBodyView *bodyView;
+@property (nonatomic, strong) FBARItemView *itemView;
+//@property (nonatomic, strong) FBGestureView *gestureView;
+//@property (nonatomic, strong) FBMattingView *mattingView;
+//@property (nonatomic, strong) FBFilterView *filterView;
+@property (nonatomic, strong) FBFilterView *filterViewEffect;
+@property (nonatomic, strong) FBFilterView *filterViewFunny;
+//@property (nonatomic, strong) FBMakeupView *makeupView;
+@property (nonatomic, strong) FBHairView *hairView;
+//@property (nonatomic, strong) FBBodyView *bodyView;
+@property (nonatomic,strong)FBLightMakeupView *lightMakeupView;
 
 @property (nonatomic, strong) FBFunContentView *fbStickerView;
 
@@ -93,10 +104,10 @@
             [self.beautyView removeFromSuperview];
             self.beautyView = nil;
         }
-//        if(self.itemView){
-//            [self.itemView removeFromSuperview];
-//            self.itemView = nil;
-//        }
+        if(self.itemView){
+            [self.itemView removeFromSuperview];
+            self.itemView = nil;
+        }
 //        if(self.mattingView){
 //            [self.mattingView removeFromSuperview];
 //            self.mattingView = nil;
@@ -105,18 +116,30 @@
 //            [self.gestureView removeFromSuperview];
 //            self.gestureView = nil;
 //        }
-        if(self.filterView){
-            [self.filterView removeFromSuperview];
-            self.filterView = nil;
+        if(self.filterViewEffect){
+            [self.filterViewEffect removeFromSuperview];
+            self.filterViewEffect = nil;
         }
+        if(self.filterViewFunny){
+            [self.filterViewFunny removeFromSuperview];
+            self.filterViewFunny = nil;
+        }
+//        if(self.filterView){
+//            [self.filterView removeFromSuperview];
+//            self.filterView = nil;
+//        }
 //        if(self.makeupView){
 //            [self.makeupView removeFromSuperview];
 //            self.makeupView = nil;
 //        }
-//        if(self.hairView){
-//            [self.hairView removeFromSuperview];
-//            self.hairView = nil;
-//        }
+        if(self.hairView){
+            [self.hairView removeFromSuperview];
+            self.hairView = nil;
+        }
+        if (self.lightMakeupView) {
+            [self.lightMakeupView removeFromSuperview];
+            self.lightMakeupView = nil;
+        }
 //        if(self.bodyView){
 //            [self.bodyView removeFromSuperview];
 //            self.bodyView = nil;
@@ -138,21 +161,14 @@
     if(!_landmarkView){
         _landmarkView = [[FBLandmarkView alloc] initWithFrame:CGRectMake(0, 0, FBScreenWidth, FBScreenHeight)];
         _landmarkView.backgroundColor = [UIColor clearColor];
+        _landmarkView.hidden = YES;
     }
     return _landmarkView;
 }
 
 - (CustomWindow *)superWindow{
     if (!_superWindow) {
-        _superWindow = [[CustomWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _superWindow.windowLevel = UIWindowLevelAlert;
-        _superWindow.userInteractionEnabled = YES;
-        
-        // 设置事件穿透区域（例如一个矩形区域）
-//        _superWindow.passThroughArea = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 350); // x, y, width, height
-        
-        [_superWindow makeKeyAndVisible];
-        _superWindow.hidden = YES;
+        _superWindow = [[CustomWindow alloc] init];
          
     }
     return _superWindow;
@@ -208,6 +224,7 @@
     if (!_optionalView) {
         _optionalView = [[FBOptionalView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(170))];
 //        _optionalView.backgroundColor = FBColors(0, 0.6);
+        _optionalView.backgroundColor = [UIColor redColor];
         WeakSelf;
         [_optionalView setOnClickOptionalBlock:^(NSInteger tag) {
             switch (tag) {
@@ -218,7 +235,7 @@
                     [weakSelf showFilterView];
                     break;
                 case 2:
-//                    [weakSelf showARItemView];
+                    [weakSelf showARItemView];
                     break;
                 case 3:
 //                    [weakSelf showMattingView];
@@ -230,7 +247,7 @@
 //                    [weakSelf showMakeupView];
                     break;
                 case 6:
-//                    [weakSelf showHairView];
+                    [weakSelf showHairView];
                     break;
                 case 7:
 //                    [weakSelf showBodyView];
@@ -246,7 +263,7 @@
 
 - (FBBeautyView *)beautyView{
     if (!_beautyView) {
-        _beautyView = [[FBBeautyView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326))];
+        _beautyView = [[FBBeautyView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kBeautyViewHeight+kSafeAreaBottom)];
         WeakSelf
         [_beautyView setHideFunctionBarBlock:^(_Bool Hide) {
             if (Hide) {
@@ -260,58 +277,79 @@
     }
     return _beautyView;
 }
-//- (HTARItemView *)itemView{
-//    if (!_itemView) {
-//        _itemView = [[HTARItemView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(278))];
-//    }
-//    return _itemView;
-//}
 
-//- (HTGestureView *)gestureView{
+- (FBARItemView *)itemView{
+    if (!_itemView) {
+        _itemView = [[FBARItemView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, kARItemViewHeight + kSafeAreaBottom)];
+    }
+    return _itemView;
+}
+
+//- (FBGestureView *)gestureView{
 //    if (!_gestureView) {
-//        _gestureView = [[HTGestureView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(267))];
+//        _gestureView = [[FBGestureView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(267))];
 //    }
 //    return _gestureView;
 //}
 
-//- (HTMattingView *)mattingView{
+//- (FBMattingView *)mattingView{
 //    if (!_mattingView) {
-//        _mattingView = [[HTMattingView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(353))];// FBHeight(278))
+//        _mattingView = [[FBMattingView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(353))];// FBHeight(278))
 //    }
 //    return _mattingView;
 //}
 
-- (FBFilterView *)filterView{
-    if (!_filterView) {
-        _filterView = [[FBFilterView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326))];
+//- (FBFilterView *)filterView{
+//    if (!_filterView) {
+//        _filterView = [[FBFilterView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kFilterViewHeight+kSafeAreaBottom)];
+//    }
+//    return _filterView;
+//}
+
+- (FBFilterView *)filterViewEffect{
+    if (!_filterViewEffect) {
+        _filterViewEffect = [[FBFilterView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kFilterViewHeight+kSafeAreaBottom) filterType:FB_Filter_Effect];
     }
-    return _filterView;
+    return _filterViewEffect;
 }
 
-//- (HTMakeupView *)makeupView{
+- (FBFilterView *)filterViewFunny{
+    if (!_filterViewFunny) {
+        _filterViewFunny = [[FBFilterView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kFilterViewHeight+kSafeAreaBottom) filterType:FB_Filter_Funny];
+    }
+    return _filterViewFunny;
+}
+
+//- (FBMakeupView *)makeupView{
 //    if (!_makeupView) {
-//        _makeupView = [[HTMakeupView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326))];
+//        _makeupView = [[FBMakeupView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom)];
 //    }
 //    return _makeupView;
 //}
 //
-//- (HTHairView *)hairView{
-//    if (!_hairView) {
-//        _hairView = [[HTHairView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326))];
-//    }
-//    return _hairView;
-//}
-
-//- (HTBodyView *)bodyView{
+- (FBHairView *)hairView{
+    if (!_hairView) {
+        _hairView = [[FBHairView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, kHairViewHeight+kSafeAreaBottom)];
+    }
+    return _hairView;
+}
+-(FBLightMakeupView *)lightMakeupView{
+    
+    if (!_lightMakeupView) {
+        _lightMakeupView = [[FBLightMakeupView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, kHairViewHeight+kSafeAreaBottom)];
+    }
+    return _lightMakeupView;
+}
+//- (FBBodyView *)bodyView{
 //    if (!_bodyView) {
-//        _bodyView = [[HTBodyView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326))];
+//        _bodyView = [[FBBodyView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom)];
 //    }
 //    return _bodyView;
 //}
 
 - (FBFunContentView *)fbStickerView{
     if (!_fbStickerView) {
-        _fbStickerView = [[FBFunContentView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(120)+kSafeAreaBottom)];
+        _fbStickerView = [[FBFunContentView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kFunViewHeight+kSafeAreaBottom)];
     }
     return _fbStickerView;
 }
@@ -376,21 +414,24 @@
         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
     }completion:nil];
     [UIView animateWithDuration:0.3 animations:^{
-        self.beautyView.frame = CGRectMake(0, FBScreenHeight - FBHeight(326), FBScreenWidth, FBHeight(326));
+        self.beautyView.frame = CGRectMake(0, FBScreenHeight - (kBeautyViewHeight+kSafeAreaBottom), FBScreenWidth, kBeautyViewHeight+kSafeAreaBottom);
     }completion:^(BOOL finished) {
 //        self.showStatus = ShowBeauty;
 //        [self cameraButtonShow:self.showStatus];
-//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(326));
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)));
         self.exitEnable = true;
     }];
     
 }
 
-// MARK: --直接弹出AR道具--
-/*
- - (void)showARItemView{
-     if(![self.superWindow.subviews containsObject:self.itemView]){
-         [self.superWindow addSubview:self.itemView];
+// MARK: --直接弹出美发--
+ - (void)showHairView{
+     if(![self.superWindow.subviews containsObject:self.hairView]){
+         [self.superWindow addSubview:self.hairView];
+         // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
+         if (self.themeWhite) {
+             self.hairView.isThemeWhite = YES;
+         }
      }
      self.exitTapView.hidden = NO;
      self.superWindow.hidden = NO;
@@ -400,16 +441,65 @@
          self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
      }completion:nil];
      [UIView animateWithDuration:0.3 animations:^{
-         self.itemView.frame = CGRectMake(0, FBScreenHeight - FBHeight(278), FBScreenWidth, FBHeight(278));
+         self.hairView.frame = CGRectMake(0, FBScreenHeight - (kHairViewHeight+kSafeAreaBottom), FBScreenWidth, kHairViewHeight+kSafeAreaBottom);
+     }completion:^(BOOL finished) {
+         self.showStatus = ShowHair;
+         [self cameraButtonShow:self.showStatus];
+//         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
+         self.exitEnable = true;
+     }];
+ }
+// MARK: --直接弹出轻彩妆--
+ - (void)showLightMakeupView{
+     if(![self.superWindow.subviews containsObject:self.lightMakeupView]){
+         [self.superWindow addSubview:self.lightMakeupView];
+         // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
+//         if (self.themeWhite) {
+//             self.lightMakeupView.isThemeWhite = YES;
+//         }
+     }
+     self.exitTapView.hidden = NO;
+     self.superWindow.hidden = NO;
+     self.exitEnable = false;
+     [UIView animateWithDuration:0.3 animations:^{
+         [self.defaultButton setHidden:YES];
+         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+     }completion:nil];
+     [UIView animateWithDuration:0.3 animations:^{
+         self.lightMakeupView.frame = CGRectMake(0, FBScreenHeight - (kHairViewHeight+kSafeAreaBottom), FBScreenWidth, kHairViewHeight+kSafeAreaBottom);
+     }completion:^(BOOL finished) {
+         self.showStatus = ShowHair;
+         [self cameraButtonShow:self.showStatus];
+//         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
+         self.exitEnable = true;
+     }];
+ }
+// MARK: --直接弹出AR道具--
+ - (void)showARItemView{
+     if(![self.superWindow.subviews containsObject:self.itemView]){
+         [self.superWindow addSubview:self.itemView];
+         // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
+//         if (self.themeWhite) {
+//             self.itemView.isThemeWhite = YES;
+//         }
+     }
+     self.exitTapView.hidden = NO;
+     self.superWindow.hidden = NO;
+     self.exitEnable = false;
+     [UIView animateWithDuration:0.3 animations:^{
+         [self.defaultButton setHidden:YES];
+         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+     }completion:nil];
+     [UIView animateWithDuration:0.3 animations:^{
+         self.itemView.frame = CGRectMake(0, FBScreenHeight - (kARItemViewHeight + kSafeAreaBottom), FBScreenWidth, kARItemViewHeight + kSafeAreaBottom);
      }completion:^(BOOL finished) {
          self.showStatus = ShowARItem;
          [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(278));
+//         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(278));
          self.exitEnable = true;
      }];
      
  }
- */
 
 /*
  // MARK: --直接弹出手势--
@@ -463,11 +553,11 @@
 
 
 // MARK: --弹出滤镜--
-- (void)showFilterView{
-    if(![self.superWindow.subviews containsObject:self.filterView]){
-        [self.superWindow addSubview:self.filterView];
+- (void)showFilterViewEffect{
+    if(![self.superWindow.subviews containsObject:self.filterViewEffect]){
+        [self.superWindow addSubview:self.filterViewEffect];
         if (self.themeWhite) {
-            self.filterView.isThemeWhite = YES;
+            self.filterViewEffect.isThemeWhite = YES;
         }
     }
     self.exitTapView.hidden = NO;
@@ -480,15 +570,66 @@
        
     }];
     [UIView animateWithDuration:0.3 animations:^{
-        self.filterView.frame = CGRectMake(0, FBScreenHeight - FBHeight(326), FBScreenWidth, FBHeight(326));
+        self.filterViewEffect.frame = CGRectMake(0, FBScreenHeight - (kFilterViewHeight+kSafeAreaBottom), FBScreenWidth, kFilterViewHeight+kSafeAreaBottom);
     }completion:^(BOOL finished) {
         self.showStatus = ShowFilter;
         [self cameraButtonShow:self.showStatus];
-        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(326));
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
         self.exitEnable = true;
     }];
-    
 }
+
+- (void)showFilterViewFunny{
+    if(![self.superWindow.subviews containsObject:self.filterViewFunny]){
+        [self.superWindow addSubview:self.filterViewFunny];
+        if (self.themeWhite) {
+            self.filterViewFunny.isThemeWhite = YES;
+        }
+    }
+    self.exitTapView.hidden = NO;
+    self.superWindow.hidden = NO;
+    self.exitEnable = false;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.defaultButton setHidden:YES];
+        self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+    }completion:^(BOOL finished) {
+       
+    }];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.filterViewFunny.frame = CGRectMake(0, FBScreenHeight - (kFilterViewHeight+kSafeAreaBottom), FBScreenWidth, kFilterViewHeight+kSafeAreaBottom);
+    }completion:^(BOOL finished) {
+        self.showStatus = ShowFilter;
+        [self cameraButtonShow:self.showStatus];
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
+        self.exitEnable = true;
+    }];
+}
+
+//- (void)showFilterView{
+//    if(![self.superWindow.subviews containsObject:self.filterView]){
+//        [self.superWindow addSubview:self.filterView];
+//        if (self.themeWhite) {
+//            self.filterView.isThemeWhite = YES;
+//        }
+//    }
+//    self.exitTapView.hidden = NO;
+//    self.superWindow.hidden = NO;
+//    self.exitEnable = false;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        [self.defaultButton setHidden:YES];
+//        self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+//    }completion:^(BOOL finished) {
+//       
+//    }];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.filterView.frame = CGRectMake(0, FBScreenHeight - (kFilterViewHeight+kSafeAreaBottom), FBScreenWidth, kFilterViewHeight+kSafeAreaBottom);
+//    }completion:^(BOOL finished) {
+//        self.showStatus = ShowFilter;
+//        [self cameraButtonShow:self.showStatus];
+////        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
+//        self.exitEnable = true;
+//    }];
+//}
 
 // MARK: --直接弹出美装--
 /*
@@ -508,11 +649,11 @@
          self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
      }completion:nil];
      [UIView animateWithDuration:0.3 animations:^{
-         self.makeupView.frame = CGRectMake(0, FBScreenHeight - FBHeight(326), FBScreenWidth, FBHeight(326));
+         self.makeupView.frame = CGRectMake(0, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)), FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
      }completion:^(BOOL finished) {
          self.showStatus = ShowMakeup;
          [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(326));
+         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)));
          self.exitEnable = true;
      }];
      
@@ -520,35 +661,7 @@
  
  */
 
-// MARK: --直接弹出美发--
-/*
- - (void)showHairView{
-     if(![self.superWindow.subviews containsObject:self.hairView]){
-         [self.superWindow addSubview:self.hairView];
-         // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
-         if (self.themeWhite) {
-             self.hairView.isThemeWhite = YES;
-         }
-     }
-     self.exitTapView.hidden = NO;
-     self.superWindow.hidden = NO;
-     self.exitEnable = false;
-     [UIView animateWithDuration:0.3 animations:^{
-         [self.defaultButton setHidden:YES];
-         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
-     }completion:nil];
-     [UIView animateWithDuration:0.3 animations:^{
-         self.hairView.frame = CGRectMake(0, FBScreenHeight - FBHeight(326), FBScreenWidth, FBHeight(326));
-     }completion:^(BOOL finished) {
-         self.showStatus = ShowHair;
-         [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(326));
-         self.exitEnable = true;
-     }];
-     
- }
 
- */
 // MARK: --直接弹出美体--
 /*
  - (void)showBodyView{
@@ -567,11 +680,11 @@
          self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
      }completion:nil];
      [UIView animateWithDuration:0.3 animations:^{
-         self.bodyView.frame = CGRectMake(0, FBScreenHeight - FBHeight(326), FBScreenWidth, FBHeight(326));
+         self.bodyView.frame = CGRectMake(0, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)), FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
      }completion:^(BOOL finished) {
          self.showStatus = ShowBody;
          [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(326));
+         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)));
          self.exitEnable = true;
      }];
      
@@ -598,11 +711,11 @@
        
     }];
     [UIView animateWithDuration:0.3 animations:^{
-        self.fbStickerView.frame = CGRectMake(0, FBScreenHeight - (FBHeight(120)+kSafeAreaBottom), FBScreenWidth, FBHeight(120)+kSafeAreaBottom);
+        self.fbStickerView.frame = CGRectMake(0, FBScreenHeight - (kFunViewHeight+kSafeAreaBottom), FBScreenWidth, kFunViewHeight+kSafeAreaBottom);
     }completion:^(BOOL finished) {
         self.showStatus = ShowFBFun;
         [self cameraButtonShow:self.showStatus];
-//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(326));
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)));
         self.exitEnable = true;
     }];
     
@@ -633,16 +746,16 @@
             case ShowBeauty:
             {
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.beautyView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326));
+                    self.beautyView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, kContainerHeightBeauty+kSafeAreaBottom);
                 }completion:nil];
              
             }
                 break;
             case ShowARItem:
             {
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.itemView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(278));
-//                }completion:nil];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.itemView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, kARItemViewHeight + kSafeAreaBottom);
+                }completion:nil];
                  
             }
                 break;
@@ -662,35 +775,35 @@
                 break;
             case ShowFilter:
             {
-                [UIView animateWithDuration:0.3 animations:^{
-                    self.filterView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326));
-                }completion:nil];
+//                [UIView animateWithDuration:0.3 animations:^{
+//                    self.filterView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, kFilterViewHeight+kSafeAreaBottom);
+//                }completion:nil];
             }
                 break;
             case ShowMakeup:
             {
 //                [UIView animateWithDuration:0.3 animations:^{
-//                    self.makeupView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326));
+//                    self.makeupView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
 //                }completion:nil];
             }
                 break;
             case ShowHair:
             {
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.hairView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326));
-//                }completion:nil];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.hairView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, kHairViewHeight+kSafeAreaBottom);
+                }completion:nil];
             }
                 break;
             case ShowBody:
             {
 //                [UIView animateWithDuration:0.3 animations:^{
-//                    self.bodyView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(326));
+//                    self.bodyView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
 //                }completion:nil];
             }
             case ShowFBFun:
             {
                 [UIView animateWithDuration:0.3 animations:^{
-                    self.fbStickerView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(120)+kSafeAreaBottom);
+                    self.fbStickerView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, kFunViewHeight+kSafeAreaBottom);
                 }completion:nil];
                  
             }
@@ -742,6 +855,21 @@
         [self.superWindow addSubview:self.optionalView];
     }
     
+    if(![self.superWindow.subviews containsObject:self.itemView]){
+        [self.superWindow addSubview:self.itemView];
+    }
+    if(![self.superWindow.subviews containsObject:self.hairView]){
+        [self.superWindow addSubview:self.hairView];
+    }
+    if(![self.superWindow.subviews containsObject:self.itemView]){
+        [self.superWindow addSubview:self.itemView];
+    }
+    if(![self.superWindow.subviews containsObject:self.filterViewFunny]){
+        [self.superWindow addSubview:self.filterViewFunny];
+    }
+    if(![self.superWindow.subviews containsObject:self.filterViewEffect]){
+        [self.superWindow addSubview:self.filterViewEffect];
+    }
 }
 
 #pragma mark - 切换主题
@@ -749,9 +877,11 @@
     _themeWhite = themeWhite;
     self.optionalView.isThemeWhite = themeWhite;
     self.beautyView.isThemeWhite = themeWhite;
-    self.filterView.isThemeWhite = themeWhite;
+//    self.filterView.isThemeWhite = themeWhite;
+    self.filterViewEffect.isThemeWhite = themeWhite;
+    self.filterViewFunny.isThemeWhite = themeWhite;
 //    self.makeupView.isThemeWhite = themeWhite;
-//    self.hairView.isThemeWhite = themeWhite;
+    self.hairView.isThemeWhite = themeWhite;
 //    self.bodyView.isThemeWhite = themeWhite;
     self.defaultButton.isThemeWhite = themeWhite;
     self.fbStickerView.isThemeWhite = themeWhite;
@@ -770,67 +900,67 @@
     
     return;
     // todo 关键点展示
-    NSArray *array = [[FaceBeauty shareInstance] getFaceDetectionReport];
-    self.landmarkView.drawEnable = @0;
-    if(array.count > 0){//识别到人脸
-        CGFloat imageOnPreviewScale = MAX(FBScreenWidth / resolutionWidth, FBScreenHeight / resolutionHeight);
-        CGFloat previewImageWidth = resolutionWidth * imageOnPreviewScale;
-        CGFloat previewImageHeight = resolutionHeight * imageOnPreviewScale;
-        for(int i = 0; i < array.count; i++){
-            FBFaceDetectionReport *report = array[i];
-            UIDevice *device = [UIDevice currentDevice];
-            switch (device.orientation) {
-                case UIDeviceOrientationPortrait:
-                    self.landmarkView.faceRect = CGRectMake(report.rect.origin.x * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2, report.rect.origin.y * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
-                    break;
-                case UIDeviceOrientationPortraitUpsideDown:
-                    self.landmarkView.faceRect = CGRectMake(previewImageWidth - report.rect.origin.x * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2 - report.rect.size.width * imageOnPreviewScale, previewImageHeight - report.rect.origin.y * imageOnPreviewScale - report.rect.size.height * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
-                    break;
-                case UIDeviceOrientationLandscapeLeft:
-                    self.landmarkView.faceRect = CGRectMake(previewImageWidth - report.rect.origin.y * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2 - report.rect.size.height * imageOnPreviewScale,  report.rect.origin.x * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
-                    break;
-                case UIDeviceOrientationLandscapeRight:
-                    self.landmarkView.faceRect = CGRectMake((report.rect.origin.y * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2), previewImageHeight - report.rect.origin.x * imageOnPreviewScale - report.rect.size.width * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
-                    break;
-                default:
-                    break;
-            }
-            self.landmarkView.pointXArray = [[NSMutableArray alloc] init];
-            self.landmarkView.pointYArray = [[NSMutableArray alloc] init];
-            for(int j = 0; j < 106; j++){
-                CGPoint point = report.keyPoints[j];
-                //默认FaceBeautyViewOrientationPortrait
-                CGFloat x = imageOnPreviewScale * point.x - (previewImageWidth - FBScreenWidth) / 2;
-                CGFloat y = imageOnPreviewScale * point.y;
-                switch (orientation) {
-                    case FaceBeautyViewOrientationLandscapeRight:
-                        y = previewImageHeight - imageOnPreviewScale * point.x;
-                        x = previewImageWidth - imageOnPreviewScale * point.y - (previewImageWidth - FBScreenWidth) / 2;
-                        break;
-                    case FaceBeautyViewOrientationPortraitUpsideDown:
-                        x = imageOnPreviewScale * point.x - (previewImageWidth - FBScreenWidth) / 2;
-                        y = previewImageHeight - imageOnPreviewScale * point.y;
-                        break;
-                    case FaceBeautyViewOrientationLandscapeLeft:
-                        y = imageOnPreviewScale * point.x;
-                        x = imageOnPreviewScale * point.y - (previewImageWidth - FBScreenWidth) / 2;
-                        break;
-                    default:
-                        break;
-                }
-                [self.landmarkView.pointXArray addObject:@(x)];
-                [self.landmarkView.pointYArray addObject:@(y)];
-            }
-            self.landmarkView.drawEnable = @1;
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                self.drawLabel1.text = [NSString stringWithFormat:@"yaw:%f",report.yaw];
-//                self.drawLabel2.text = [NSString stringWithFormat:@"pitch:%f",report.pitch];
-//                self.drawLabel3.text = [NSString stringWithFormat:@"roll:%f",report.roll];
-                [self.landmarkView setNeedsDisplay];
-            });
-        }
-    }
-    NSLog(@"face number:%lu",(unsigned long)array.count);
+//    NSArray *array = [[FaceBeauty shareInstance] getFaceDetectionReport];
+//    self.landmarkView.drawEnable = @0;
+//    if(array.count > 0){//识别到人脸
+//        CGFloat imageOnPreviewScale = MAX(FBScreenWidth / resolutionWidth, FBScreenHeight / resolutionHeight);
+//        CGFloat previewImageWidth = resolutionWidth * imageOnPreviewScale;
+//        CGFloat previewImageHeight = resolutionHeight * imageOnPreviewScale;
+//        for(int i = 0; i < array.count; i++){
+//            FBFaceDetectionReport *report = array[i];
+//            UIDevice *device = [UIDevice currentDevice];
+//            switch (device.orientation) {
+//                case UIDeviceOrientationPortrait:
+//                    self.landmarkView.faceRect = CGRectMake(report.rect.origin.x * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2, report.rect.origin.y * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
+//                    break;
+//                case UIDeviceOrientationPortraitUpsideDown:
+//                    self.landmarkView.faceRect = CGRectMake(previewImageWidth - report.rect.origin.x * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2 - report.rect.size.width * imageOnPreviewScale, previewImageHeight - report.rect.origin.y * imageOnPreviewScale - report.rect.size.height * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
+//                    break;
+//                case UIDeviceOrientationLandscapeLeft:
+//                    self.landmarkView.faceRect = CGRectMake(previewImageWidth - report.rect.origin.y * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2 - report.rect.size.height * imageOnPreviewScale,  report.rect.origin.x * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
+//                    break;
+//                case UIDeviceOrientationLandscapeRight:
+//                    self.landmarkView.faceRect = CGRectMake((report.rect.origin.y * imageOnPreviewScale - (previewImageWidth - FBScreenWidth) / 2), previewImageHeight - report.rect.origin.x * imageOnPreviewScale - report.rect.size.width * imageOnPreviewScale, report.rect.size.width * imageOnPreviewScale, report.rect.size.height * imageOnPreviewScale);
+//                    break;
+//                default:
+//                    break;
+//            }
+//            self.landmarkView.pointXArray = [[NSMutableArray alloc] init];
+//            self.landmarkView.pointYArray = [[NSMutableArray alloc] init];
+//            for(int j = 0; j < 106; j++){
+//                CGPoint point = report.keyPoints[j];
+//                //默认FaceBeautyViewOrientationPortrait
+//                CGFloat x = imageOnPreviewScale * point.x - (previewImageWidth - FBScreenWidth) / 2;
+//                CGFloat y = imageOnPreviewScale * point.y;
+//                switch (orientation) {
+//                    case FaceBeautyViewOrientationLandscapeRight:
+//                        y = previewImageHeight - imageOnPreviewScale * point.x;
+//                        x = previewImageWidth - imageOnPreviewScale * point.y - (previewImageWidth - FBScreenWidth) / 2;
+//                        break;
+//                    case FaceBeautyViewOrientationPortraitUpsideDown:
+//                        x = imageOnPreviewScale * point.x - (previewImageWidth - FBScreenWidth) / 2;
+//                        y = previewImageHeight - imageOnPreviewScale * point.y;
+//                        break;
+//                    case FaceBeautyViewOrientationLandscapeLeft:
+//                        y = imageOnPreviewScale * point.x;
+//                        x = imageOnPreviewScale * point.y - (previewImageWidth - FBScreenWidth) / 2;
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                [self.landmarkView.pointXArray addObject:@(x)];
+//                [self.landmarkView.pointYArray addObject:@(y)];
+//            }
+//            self.landmarkView.drawEnable = @1;
+//            dispatch_async(dispatch_get_main_queue(), ^{
+////                self.drawLabel1.text = [NSString stringWithFormat:@"yaw:%f",report.yaw];
+////                self.drawLabel2.text = [NSString stringWithFormat:@"pitch:%f",report.pitch];
+////                self.drawLabel3.text = [NSString stringWithFormat:@"roll:%f",report.roll];
+//                [self.landmarkView setNeedsDisplay];
+//            });
+//        }
+//    }
+//    NSLog(@"face number:%lu",(unsigned long)array.count);
 }
 
 
@@ -853,6 +983,34 @@
         self.landmarkView = nil;
     }
     
+    [self destroyEffect];
+}
+
+- (void)destroyEffect{
+    
+    if (self.itemView){
+        [self.itemView removeFromSuperview];
+        self.itemView = nil;
+    }
+    
+    if (self.hairView){
+        [self.hairView removeFromSuperview];
+        self.hairView = nil;
+    }
+    if(self.lightMakeupView){
+        [self.lightMakeupView removeFromSuperview];
+        self.lightMakeupView = nil;
+    }
+
+    if (self.filterViewFunny){
+        [self.filterViewFunny removeFromSuperview];
+        self.filterViewFunny = nil;
+    }
+    
+    if (self.filterViewEffect){
+        [self.filterViewEffect removeFromSuperview];
+        self.filterViewEffect = nil;
+    }
 }
 
 @end

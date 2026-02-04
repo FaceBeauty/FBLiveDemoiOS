@@ -16,6 +16,7 @@
         _startBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_startBtn setBackgroundImage:[UIImage imageNamed:@"btn_kuaimen.png"] forState:UIControlStateNormal];
         [_startBtn setTitle:@"进入" forState:UIControlStateNormal];
+        [_startBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
         [_startBtn addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _startBtn;
