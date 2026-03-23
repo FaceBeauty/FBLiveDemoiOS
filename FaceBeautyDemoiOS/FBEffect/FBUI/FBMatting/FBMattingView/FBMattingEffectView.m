@@ -171,8 +171,8 @@ static NSString *const FBMattingEffectViewCellId = @"FBMattingEffectViewCellId";
             [collectionView reloadItemsAtIndexPaths:@[indexPath]];
              
             DownloadedType downloadedType = FB_DOWNLOAD_STATE_Portraits;
-            NSString *itemPath = [[[FaceBeauty shareInstance] getAISegEffectPath] stringByAppendingFormat:@"fb_aiseg_effect_config.json"];
-            NSString *jsonKey = @"fb_aiseg_effect";
+            NSString *itemPath = [[[FaceBeauty shareInstance] getAISegEffectPath] stringByAppendingFormat:@"aiseg_effect_config.json"];
+            NSString *jsonKey = @"aiseg_effect";
             
             self.downloadIndex = indexPath.row;
             
@@ -230,6 +230,27 @@ static NSString *const FBMattingEffectViewCellId = @"FBMattingEffectViewCellId";
         }
     }
     return -1;
+}
+
+#pragma mark - 重置选中状态
+- (void)resetSelectedState {
+    // 清除选中的模型
+    self.selectedModel = [[FBModel alloc] init];
+
+    // 遍历 listArr，将所有项的 selected 设置为 false
+    for (int i = 0; i < self.listArr.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:self.listArr[i]];
+        if (model.selected) {
+            model.selected = false;
+            [self.listArr replaceObjectAtIndex:i withObject:[FBTool getDictionaryWithFBModel:model]];
+        }
+    }
+
+    // 刷新CollectionView
+    [self.collectionView reloadData];
+
+    // 清除效果
+    [[FaceBeauty shareInstance] setAISegEffect:@""];
 }
 
 @end

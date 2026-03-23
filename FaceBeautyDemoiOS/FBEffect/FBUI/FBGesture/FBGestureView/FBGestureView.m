@@ -81,7 +81,7 @@ static NSString *const FBGestureViewCellId = @"FBGestureViewCellId";
     _listArr = @[
         @{
             @"name":[FBTool isCurrentLanguageChinese] ? @"手势特效" : @"Gesture",
-            @"classify":[FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getGestureEffectPath] stringByAppendingFormat:@"fb_gesture_effect_config.json"] withKey:@"fb_gesture_effect"]
+            @"classify":[FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getGestureEffectPath] stringByAppendingFormat:@"gesture_effect_config.json"] withKey:@"gesture_effect"]
         }
       ];
     return _listArr;
@@ -139,6 +139,11 @@ static NSString *const FBGestureViewCellId = @"FBGestureViewCellId";
 //    }
 //    return _backButton;
 //}
+
+#pragma mark - 重置选中状态
+- (void)resetSelectedState {
+    [self.effectView resetSelectedState];
+}
 
 @end
 

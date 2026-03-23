@@ -114,6 +114,33 @@ NSString *waterMarkPath = @"";
     
 }
 
+-(void)setType:(FBARItemTypes)type{
+    _type = type;
+    if (type == FBItemWatermark) {
+        return;
+    }
+//    if (type == FBItemSticker) {
+//        self.listArr  = [[FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getARItemPathBy:0] stringByAppendingFormat:@"sticker_config.json"] withKey:@"sticker"] mutableCopy];
+//    }else if(type == FBItemMask){
+//        self.listArr  = [[FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getARItemPathBy:1] stringByAppendingFormat:@"mask_config.json"] withKey:@"mask"] mutableCopy];
+//    }else
+    NSArray *arr = @[];
+        if(type == FBItemGift){
+            arr = [[FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getARItemPathBy:FBItemGift] stringByAppendingFormat:@"gift_config.json"] withKey:@"gift"] mutableCopy];
+        self.listArr  = @[
+            @{
+                @"name": [FBTool isCurrentLanguageChinese] ? @"礼物" : @"Gift",
+                @"classify": arr
+            }
+        ];
+    }
+    self.effectView.listArr = [arr mutableCopy];
+    self.effectView.itemType = type;
+    
+//    [[FaceBeauty shareInstance] setReshape:0 value:70];
+     
+}
+
 #pragma mark - 清除按钮点击
 - (void)cleanButtonClick:(UIButton *)btn {
     

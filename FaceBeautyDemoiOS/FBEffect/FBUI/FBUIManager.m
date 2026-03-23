@@ -20,6 +20,7 @@
 #import "FBLandmarkView.h"
 #import "FBFunContentView.h"
 #import "FBLightMakeupView.h"
+#import "FBMakeupView.h"
 
 @interface FBUIManager ()<FBRestoreAlertViewDelegate>
 
@@ -35,16 +36,16 @@
 @property (nonatomic, strong) FBOptionalView *optionalView;
 @property (nonatomic, strong) FBBeautyView *beautyView;
 @property (nonatomic, strong) FBARItemView *itemView;
-//@property (nonatomic, strong) FBGestureView *gestureView;
-//@property (nonatomic, strong) FBMattingView *mattingView;
+@property (nonatomic, strong) FBGestureView *gestureView;
+@property (nonatomic, strong) FBMattingView *mattingView;
 //@property (nonatomic, strong) FBFilterView *filterView;
 @property (nonatomic, strong) FBFilterView *filterViewEffect;
 @property (nonatomic, strong) FBFilterView *filterViewFunny;
 //@property (nonatomic, strong) FBMakeupView *makeupView;
 @property (nonatomic, strong) FBHairView *hairView;
-//@property (nonatomic, strong) FBBodyView *bodyView;
-@property (nonatomic,strong)FBLightMakeupView *lightMakeupView;
-
+@property (nonatomic, strong) FBBodyView *bodyView;
+@property (nonatomic,strong)FBLightMakeupView *lightMakeupView; ///< 轻彩妆
+@property (nonatomic,strong)FBMakeupView *makeupView;// 美妆
 @property (nonatomic, strong) FBFunContentView *fbStickerView;
 
 
@@ -108,14 +109,14 @@
             [self.itemView removeFromSuperview];
             self.itemView = nil;
         }
-//        if(self.mattingView){
-//            [self.mattingView removeFromSuperview];
-//            self.mattingView = nil;
-//        }
-//        if(self.gestureView){
-//            [self.gestureView removeFromSuperview];
-//            self.gestureView = nil;
-//        }
+        if(self.mattingView){
+            [self.mattingView removeFromSuperview];
+            self.mattingView = nil;
+        }
+        if(self.gestureView){
+            [self.gestureView removeFromSuperview];
+            self.gestureView = nil;
+        }
         if(self.filterViewEffect){
             [self.filterViewEffect removeFromSuperview];
             self.filterViewEffect = nil;
@@ -140,10 +141,14 @@
             [self.lightMakeupView removeFromSuperview];
             self.lightMakeupView = nil;
         }
-//        if(self.bodyView){
-//            [self.bodyView removeFromSuperview];
-//            self.bodyView = nil;
-//        }
+        if (self.makeupView) {
+            [self.makeupView removeFromSuperview];
+            self.makeupView = nil;
+        }
+        if(self.bodyView){
+            [self.bodyView removeFromSuperview];
+            self.bodyView = nil;
+        }
         if(self.fbStickerView){
             [self.fbStickerView removeFromSuperview];
             self.fbStickerView = nil;
@@ -235,13 +240,13 @@
                     [weakSelf showFilterView];
                     break;
                 case 2:
-                    [weakSelf showARItemView];
+//                    [weakSelf showARItemView];
                     break;
                 case 3:
-//                    [weakSelf showMattingView];
+                    [weakSelf showMattingView:FBMattingTypeSegmentation];
                     break;
                 case 4:
-//                    [weakSelf showGestureView];
+                    [weakSelf showGestureView];
                     break;
                 case 5:
 //                    [weakSelf showMakeupView];
@@ -250,7 +255,7 @@
                     [weakSelf showHairView];
                     break;
                 case 7:
-//                    [weakSelf showBodyView];
+                    [weakSelf showBodyView];
                     break;
     
                 default:
@@ -285,19 +290,18 @@
     return _itemView;
 }
 
-//- (FBGestureView *)gestureView{
-//    if (!_gestureView) {
-//        _gestureView = [[FBGestureView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(267))];
-//    }
-//    return _gestureView;
-//}
+- (FBGestureView *)gestureView{
+    if (!_gestureView) {
+        _gestureView = [[FBGestureView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kGestureViewHeight + kSafeAreaBottom)];
+    }
+    return _gestureView;
+}
 
-//- (FBMattingView *)mattingView{
-//    if (!_mattingView) {
-//        _mattingView = [[FBMattingView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(353))];// FBHeight(278))
-//    }
-//    return _mattingView;
-//}
+- (FBMattingView *)mattingView{
+    // 由于需要根据 type 初始化，mattingView 不再使用懒加载
+    // 在 showMattingView: 方法中动态创建
+    return _mattingView;
+}
 
 //- (FBFilterView *)filterView{
 //    if (!_filterView) {
@@ -340,12 +344,18 @@
     }
     return _lightMakeupView;
 }
-//- (FBBodyView *)bodyView{
-//    if (!_bodyView) {
-//        _bodyView = [[FBBodyView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom)];
-//    }
-//    return _bodyView;
-//}
+-(FBMakeupView *)makeupView{
+    if (!_makeupView) {
+        _makeupView = [[FBMakeupView alloc]initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, kHairViewHeight+kSafeAreaBottom)];
+    }
+    return _makeupView;
+}
+- (FBBodyView *)bodyView{
+    if (!_bodyView) {
+        _bodyView = [[FBBodyView alloc] initWithFrame:CGRectMake(0,FBScreenHeight, FBScreenWidth, kBodyViewHeight+kSafeAreaBottom)];
+    }
+    return _bodyView;
+}
 
 - (FBFunContentView *)fbStickerView{
     if (!_fbStickerView) {
@@ -449,6 +459,31 @@
          self.exitEnable = true;
      }];
  }
+// MARK: --直接弹出美妆--
+ - (void)showMakeupView{
+     if(![self.superWindow.subviews containsObject:self.makeupView]){
+         [self.superWindow addSubview:self.makeupView];
+         // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
+//         if (self.themeWhite) {
+//             self.lightMakeupView.isThemeWhite = YES;
+//         }
+     }
+     self.exitTapView.hidden = NO;
+     self.superWindow.hidden = NO;
+     self.exitEnable = false;
+     [UIView animateWithDuration:0.3 animations:^{
+         [self.defaultButton setHidden:YES];
+         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+     }completion:nil];
+     [UIView animateWithDuration:0.3 animations:^{
+         self.makeupView.frame = CGRectMake(0, FBScreenHeight - (kMakeupViewHeight+kSafeAreaBottom), FBScreenWidth, kMakeupViewHeight+kSafeAreaBottom);
+     }completion:^(BOOL finished) {
+         self.showStatus = ShowMakeup;
+         [self cameraButtonShow:self.showStatus];
+//         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
+         self.exitEnable = true;
+     }];
+ }
 // MARK: --直接弹出轻彩妆--
  - (void)showLightMakeupView{
      if(![self.superWindow.subviews containsObject:self.lightMakeupView]){
@@ -475,7 +510,14 @@
      }];
  }
 // MARK: --直接弹出AR道具--
- - (void)showARItemView{
+- (void)showARItemView:(FBARItemTypes)type{
+    
+    if (self.itemView) {
+        [self.itemView removeFromSuperview];
+        self.itemView = nil;
+    }
+    
+        _itemView = [[FBARItemView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, kARItemViewHeight + kSafeAreaBottom)];
      if(![self.superWindow.subviews containsObject:self.itemView]){
          [self.superWindow addSubview:self.itemView];
          // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
@@ -483,6 +525,7 @@
 //             self.itemView.isThemeWhite = YES;
 //         }
      }
+    self.itemView.type = type;
      self.exitTapView.hidden = NO;
      self.superWindow.hidden = NO;
      self.exitEnable = false;
@@ -501,55 +544,70 @@
      
  }
 
-/*
- // MARK: --直接弹出手势--
- - (void)showGestureView{
-     if(![self.superWindow.subviews containsObject:self.gestureView]){
-         [self.superWindow addSubview:self.gestureView];
-     }
 
-     self.exitTapView.hidden = NO;
-     self.superWindow.hidden = NO;
-     self.exitEnable = false;
-     [UIView animateWithDuration:0.3 animations:^{
-         [self.defaultButton setHidden:YES];
-         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
-     }completion:nil];
-     [UIView animateWithDuration:0.3 animations:^{
-         self.gestureView.frame = CGRectMake(0, FBScreenHeight - FBHeight(267), FBScreenWidth, FBHeight(267));
-     }completion:^(BOOL finished) {
-         self.showStatus = ShowGesture;
-         [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(267));
-         self.exitEnable = true;
-     }];
-     
- }
- */
+//  MARK: --直接弹出手势--
+- (void)showGestureView{
+    if(![self.superWindow.subviews containsObject:self.gestureView]){
+        [self.superWindow addSubview:self.gestureView];
+    }
 
-/*
- // MARK: --直接弹出人像分割--
- - (void)showMattingView{
-     if(![self.superWindow.subviews containsObject:self.mattingView]){
-         [self.superWindow addSubview:self.mattingView];
-     }
-     self.exitTapView.hidden = NO;
-     self.superWindow.hidden = NO;
-     self.exitEnable = false;
-     [UIView animateWithDuration:0.3 animations:^{
-         [self.defaultButton setHidden:YES];
-         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
-     }completion:nil];
-     [UIView animateWithDuration:0.3 animations:^{
-         self.mattingView.frame = CGRectMake(0, FBScreenHeight - FBHeight(353), FBScreenWidth, FBHeight(353));
-     }completion:^(BOOL finished) {
-         self.showStatus = ShowMatting;
-         [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(353));
-         self.exitEnable = true;
-     }];
+    // 重置选中状态，清除上次的选中记录
+    [self.gestureView resetSelectedState];
+
+    self.exitTapView.hidden = NO;
+    self.superWindow.hidden = NO;
+    self.exitEnable = false;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.defaultButton setHidden:YES];
+        self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+    }completion:nil];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.gestureView.frame = CGRectMake(0, FBScreenHeight - (kGestureViewHeight + kSafeAreaBottom), FBScreenWidth, (kGestureViewHeight + kSafeAreaBottom));
+    }completion:^(BOOL finished) {
+        self.showStatus = ShowGesture;
+        [self cameraButtonShow:self.showStatus];
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(267));
+        self.exitEnable = true;
+    }];
+    
  }
- */
+ 
+
+
+// MARK: --直接弹出人像分割/绿幕抠图--
+- (void)showMattingView:(FBMattingType)type{
+    // 如果已存在 mattingView，先移除
+    if (self.mattingView) {
+        [self.mattingView removeFromSuperview];
+        self.mattingView = nil;
+    }
+
+    // 根据类型创建新的 mattingView
+    _mattingView = [[FBMattingView alloc] initWithFrame:CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(353)) type:type];
+
+    // 重置选中状态，清除上次的选中记录
+    [self.mattingView resetSelectedState];
+
+    if(![self.superWindow.subviews containsObject:self.mattingView]){
+        [self.superWindow addSubview:self.mattingView];
+    }
+    self.exitTapView.hidden = NO;
+    self.superWindow.hidden = NO;
+    self.exitEnable = false;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.defaultButton setHidden:YES];
+        self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+    }completion:nil];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.mattingView.frame = CGRectMake(0, FBScreenHeight - FBHeight(353), FBScreenWidth, FBHeight(353));
+    }completion:^(BOOL finished) {
+        self.showStatus = ShowMatting;
+        [self cameraButtonShow:self.showStatus];
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - FBHeight(353));
+        self.exitEnable = true;
+    }];
+}
+ 
 
 
 // MARK: --弹出滤镜--
@@ -663,34 +721,38 @@
 
 
 // MARK: --直接弹出美体--
-/*
- - (void)showBodyView{
-     if(![self.superWindow.subviews containsObject:self.bodyView]){
-         [self.superWindow addSubview:self.bodyView];
-         // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
-         if (self.themeWhite) {
-             self.bodyView.isThemeWhite = YES;
-         }
-     }
-     self.exitTapView.hidden = NO;
-     self.superWindow.hidden = NO;
-     self.exitEnable = false;
-     [UIView animateWithDuration:0.3 animations:^{
-         [self.defaultButton setHidden:YES];
-         self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
-     }completion:nil];
-     [UIView animateWithDuration:0.3 animations:^{
-         self.bodyView.frame = CGRectMake(0, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)), FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
-     }completion:^(BOOL finished) {
-         self.showStatus = ShowBody;
-         [self cameraButtonShow:self.showStatus];
-         self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom)));
-         self.exitEnable = true;
-     }];
-     
- }
 
- */
+- (void)showBodyView{
+    if(![self.superWindow.subviews containsObject:self.bodyView]){
+        [self.superWindow addSubview:self.bodyView];
+        // 避免在白色主题下重置所有参数后再弹出时回到初始化状态
+        if (self.themeWhite) {
+            self.bodyView.isThemeWhite = YES;
+        }
+    }
+
+    // 重置选中状态，清除上次的选中记录
+    [self.bodyView resetSelectedState];
+
+    self.exitTapView.hidden = NO;
+    self.superWindow.hidden = NO;
+    self.exitEnable = false;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.defaultButton setHidden:YES];
+        self.optionalView.frame = CGRectMake(0, FBScreenHeight, FBScreenWidth, FBHeight(170));
+    }completion:nil];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.bodyView.frame = CGRectMake(0, FBScreenHeight - (kBodyViewHeight+kSafeAreaBottom), FBScreenWidth, kBodyViewHeight+kSafeAreaBottom);
+    }completion:^(BOOL finished) {
+        self.showStatus = ShowBody;
+        [self cameraButtonShow:self.showStatus];
+//        self.exitTapView.frame = CGRectMake(0, 0, FBScreenWidth, FBScreenHeight - (FBHeight(236)+kSafeAreaBottom));
+        self.exitEnable = true;
+    }];
+    
+}
+
+ 
 
 // MARK: --弹出FBFunView--
 - (void)showFunView:(FBARItemTypes)type{
@@ -761,16 +823,16 @@
                 break;
             case ShowGesture:
             {
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.gestureView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(267));
-//                }completion:nil];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.gestureView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(267));
+                }completion:nil];
             }
                 break;
             case ShowMatting:
             {
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.mattingView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(353));
-//                }completion:nil];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.mattingView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(353));
+                }completion:nil];
             }
                 break;
             case ShowFilter:
@@ -796,9 +858,9 @@
                 break;
             case ShowBody:
             {
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.bodyView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
-//                }completion:nil];
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.bodyView.frame = CGRectMake(0,FBScreenHeight, FBScreenWidth, FBHeight(236)+kSafeAreaBottom);
+                }completion:nil];
             }
             case ShowFBFun:
             {
@@ -882,7 +944,7 @@
     self.filterViewFunny.isThemeWhite = themeWhite;
 //    self.makeupView.isThemeWhite = themeWhite;
     self.hairView.isThemeWhite = themeWhite;
-//    self.bodyView.isThemeWhite = themeWhite;
+    self.bodyView.isThemeWhite = themeWhite;
     self.defaultButton.isThemeWhite = themeWhite;
     self.fbStickerView.isThemeWhite = themeWhite;
 }
@@ -1000,6 +1062,10 @@
     if(self.lightMakeupView){
         [self.lightMakeupView removeFromSuperview];
         self.lightMakeupView = nil;
+    }
+    if (self.makeupView) {
+        [self.makeupView removeFromSuperview];
+        self.makeupView = nil;
     }
 
     if (self.filterViewFunny){

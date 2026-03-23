@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBUIConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 /**
@@ -15,8 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FBARItemEffectView : UIView
 
+@property (nonatomic, assign) FBARItemTypes itemType;
+@property (nonatomic, strong) NSMutableArray *listArr;
 
 - (instancetype)initWithFrame:(CGRect)frame listArr:(NSArray *)listArr;
+
 
 @property (nonatomic, copy) void (^arDownladCompleteBlock)(NSInteger index);
 

@@ -195,14 +195,15 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 // 模块功能视图高度
 #define kBeautyViewHeight FBHeight(236)  // 美颜容器视图高度
 #define kHairViewHeight FBHeight(200)  // 美发容器视图高度
-#define kBodyViewHeight FBHeight(236)  // 美体容器视图高度
+#define kBodyViewHeight FBHeight(236+53)  // 美体容器视图高度
 //#define kFilterViewHeight FBHeight(236)  // 滤镜容器视图高度
 #define kFilterViewHeight FBHeight(120)  // 滤镜容器视图高度
 #define kGestureViewHeight FBHeight(236)  // 手势容器视图高度
-#define kMakeupViewHeight FBHeight(236)  // 美妆容器视图高度
+#define kMakeupViewHeight FBHeight(236+28)  // 美妆容器视图高度
 //#define kARItemViewHeight FBHeight(278)  // AR道具视图高度
 #define kARItemViewHeight FBHeight(120)  // AR道具视图高度
 #define kFunViewHeight FBHeight(120)  // 美妆容器视图高度
+#define kMattingViewHeight FBHeight(353)  // 抠图视图高度
 
 // 各模块容器视图高度
 //#define kContainerHeightBeauty FBHeight(258)  // 美颜容器视图高度
@@ -218,8 +219,9 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define kContainerHeightBody FBHeight(236)  // 美体容器视图高度
 #define kContainerHeightFilter FBHeight(120)  // 滤镜容器视图高度
 #define kContainerHeightGesture FBHeight(236)  // 手势容器视图高度
-#define kContainerHeightMakeup FBHeight(236)  // 美妆容器视图高度
+#define kContainerHeightMakeup FBHeight(236+28)  // 美妆容器视图高度
 #define kContainerHeightFun FBHeight(120)  // 贴纸、面具、礼物、水印容器视图高度
+#define kContainerHeightMatting FBHeight(353)  // 抠图视图高度
 
 // 拍照按钮的宽高
 #define kCaptureViewWH FBWidth(80)

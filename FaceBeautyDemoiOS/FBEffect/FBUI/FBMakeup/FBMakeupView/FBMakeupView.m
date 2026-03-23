@@ -57,8 +57,8 @@
         
         self.makeupArray = [FBTool jsonModeForPath:FBMakeupBeautyPath withKey:@"FBMakeupBeauty"];
         NSLog(@"style json path: %@", [[FaceBeauty shareInstance] getStylePath]);
-        self.styleArray = [FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getStylePath] stringByAppendingFormat:@"fb_makeup_style_config.json"] withKey:@"fb_makeup_style"];
-        
+//        self.styleArray = [FBTool jsonModeForPath:[[[FaceBeauty shareInstance] getStylePath] stringByAppendingFormat:@"fb_makeup_style_config.json"] withKey:@"fb_makeup_style"];
+//        
         self.currentType = FB_MAKEUP_SLIDER;
         self.currentModel = [[FBModel alloc] initWithDic:self.makeupArray[0]];
         [self addSubview:self.sliderRelatedView];
@@ -71,7 +71,7 @@
         [self addSubview:self.containerView];
         [self.containerView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self);
-            make.height.mas_equalTo(kContainerHeightMakeup+kSafeAreaBottom);
+            make.height.mas_equalTo(kContainerHeightMakeup+kSafeAreaBottom-kSliderViewHeight);
         }];
         [self.containerView addSubview:self.menuView];
         [self.menuView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -93,11 +93,11 @@
             make.bottom.equalTo(self.containerView);
         }];
                     
-        [self.containerView addSubview:self.styleView];
-        [self.styleView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.right.equalTo(self.makeupView);
-            make.height.mas_equalTo(FBHeight(77));
-        }];
+//        [self.containerView addSubview:self.styleView];
+//        [self.styleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.left.right.equalTo(self.makeupView);
+//            make.height.mas_equalTo(FBHeight(77));
+//        }];
         [self addSubview:self.confirmLabel];
         [self.confirmLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
@@ -128,12 +128,12 @@
         self.menuView.disabled = NO;
 //        [self.sliderRelatedView setHidden:NO]; //显示滑动条
         [self.makeupView setHidden:YES];
-        [self.styleView setHidden:NO];
+//        [self.styleView setHidden:NO];
         self.currentType = FB_STYLE_SLIDER;
 
 //        self.currentModel = [[FBModel alloc] initWithDic:self.styleArray[0]];
     
-        [self.styleView updateStyleListData];
+//        [self.styleView updateStyleListData];
         
     }else if ([name isEqualToString:[FBTool isCurrentLanguageChinese] ? @"美妆" : @"Makeup"]) {
         
@@ -156,7 +156,7 @@
             self.currentType = FB_MAKEUP_SLIDER;
             self.menuView.disabled = NO;
             [self.sliderRelatedView setHidden:YES];
-            [self.styleView setHidden:YES];
+//            [self.styleView setHidden:YES];
             [self.makeupView setHidden:NO];
             self.currentModel = [[FBModel alloc] initWithDic:self.makeupArray[0]];
             
@@ -172,10 +172,11 @@
         // 设置美妆特效
         [self.makeupView updateEffectWithValue:value];
         
-    } else if (self.currentType == FB_STYLE_SLIDER) {
-        // 设置妆容推荐
-        [self.styleView updateEffectWithValue:value];
     }
+//    else if (self.currentType == FB_STYLE_SLIDER) {
+//        // 设置妆容推荐
+//        [self.styleView updateEffectWithValue:value];
+//    }
 }
 
 - (void)saveParameters:(int)value{
@@ -197,11 +198,12 @@
             self.currentModel = [[FBModel alloc] initWithDic:self.makeupArray[0]];
             [self.makeupView restore];
             [self.sliderRelatedView setHidden:YES];
-        } else if (self.currentType == FB_STYLE_SLIDER) {
-            self.currentModel = [[FBModel alloc] initWithDic:self.styleArray[0]];
-            [self.sliderRelatedView setHidden:NO];
         }
-        
+//        else if (self.currentType == FB_STYLE_SLIDER) {
+//            self.currentModel = [[FBModel alloc] initWithDic:self.styleArray[0]];
+//            [self.sliderRelatedView setHidden:NO];
+//        }
+//        
         [self.sliderRelatedView.sliderView setSliderType:self.currentModel.sliderType WithValue:[FBTool getFloatValueForKey:self.currentModel.key]];
 //        [self.sliderRelatedView setHidden:NO];
     }
@@ -235,7 +237,7 @@
 - (void)setIsThemeWhite:(BOOL)isThemeWhite {
     
     self.menuView.isThemeWhite = isThemeWhite;
-    self.styleView.isThemeWhite = isThemeWhite;
+//    self.styleView.isThemeWhite = isThemeWhite;
     self.makeupView.isThemeWhite = isThemeWhite;
     self.sliderRelatedView.isThemeWhite = isThemeWhite;
     self.containerView.backgroundColor = isThemeWhite ? [UIColor whiteColor] : FBColors(0, 0.7);
@@ -255,16 +257,17 @@
                     }
                 ]
             },
-            @{
-                @"name":[FBTool isCurrentLanguageChinese] ? @"妆容推荐" : @"MakeupStyle",
-                @"classify":@[
-                    @{
-                        @"name":[FBTool isCurrentLanguageChinese] ? @"妆容推荐" : @"MakeupStyle",
-                        @"value":self.styleArray
-                    }
-                ]
-            
-            }];
+//            @{
+//                @"name":[FBTool isCurrentLanguageChinese] ? @"妆容推荐" : @"MakeupStyle",
+//                @"classify":@[
+//                    @{
+//                        @"name":[FBTool isCurrentLanguageChinese] ? @"妆容推荐" : @"MakeupStyle",
+//                        @"value":self.styleArray
+//                    }
+//                ]
+//            
+//            }
+        ];
     }
     return _listArr;
 }

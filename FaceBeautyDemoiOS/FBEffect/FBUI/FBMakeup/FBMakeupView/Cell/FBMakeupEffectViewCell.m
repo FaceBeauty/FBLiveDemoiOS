@@ -71,10 +71,10 @@
 - (void)setBodyModel:(FBModel *)model themeWhite:(BOOL)white {
     
     if (model.selected) {
-        [self.item setImage:[UIImage imageNamed:white ? [NSString stringWithFormat:@"34_%@", model.selectedIcon] : model.selectedIcon] imageWidth:FBWidth(48) title:[FBTool isCurrentLanguageChinese] ? model.title : model.title_en];
+        [self.item setImage:[UIImage imageNamed:white ? [NSString stringWithFormat:@"%@", model.selectedIcon] : model.selectedIcon] imageWidth:FBWidth(48) title:[FBTool isCurrentLanguageChinese] ? model.title : model.title_en];
         [self.item setTextColor:MAIN_COLOR];
     }else{
-        [self.item setImage:[UIImage imageNamed:white ? [NSString stringWithFormat:@"34_%@", model.icon] : model.icon] imageWidth:FBWidth(48) title:[FBTool isCurrentLanguageChinese] ? model.title : model.title_en];
+        [self.item setImage:[UIImage imageNamed:white ? [NSString stringWithFormat:@"%@", model.icon] : model.icon] imageWidth:FBWidth(48) title:[FBTool isCurrentLanguageChinese] ? model.title : model.title_en];
         [self.item setTextColor:white ? [UIColor blackColor] : FBColors(255, 1.0)];
     }
     [self.item setTextFont:FBFontRegular(12)];

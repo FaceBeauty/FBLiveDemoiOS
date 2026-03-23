@@ -22,6 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isThemeWhite;
 
+/**
+ * 重置选中状态
+ */
+- (void)resetSelectedState;
+
 @end
 
 NS_ASSUME_NONNULL_END

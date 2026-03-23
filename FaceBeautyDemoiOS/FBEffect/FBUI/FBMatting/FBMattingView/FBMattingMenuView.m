@@ -49,34 +49,44 @@ static NSString *const FBMattingMenuViewCellId = @"FBMattingMenuViewCellId";
 
 - (instancetype)initWithFrame:(CGRect)frame listArr:(NSArray *)listArr
 {
-    
+    return [self initWithFrame:frame listArr:listArr type:FBMattingTypeSegmentation];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame listArr:(NSArray *)listArr type:(FBMattingType)type
+{
     self = [super initWithFrame:frame];
     if (self) {
         self.listArr = listArr;
+        _mattingType = type;
         self.selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self addSubview:self.menuCollectionView];
         [self addSubview:self.switchScreenView];
-        
+
         [self.menuCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.height.equalTo(self);
             make.right.equalTo(self.switchScreenView.mas_left);
         }];
-         
+
         [self.switchScreenView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.right.height.equalTo(self);
         }];
-        
+
+        // 根据类型初始化 switchScreenView 的显示状态
+        if (_mattingType == FBMattingTypeChromaKeying) {
+            self.switchScreenView.alpha = 1;
+        } else {
+            self.switchScreenView.alpha = 0;
+        }
     }
     return self;
-    
 }
 
 #pragma mark - 显示or隐藏绿幕按钮
 -(void)setSelectedIndexPath:(NSIndexPath *)selectedIndexPath{
     _selectedIndexPath = selectedIndexPath;
-    
-   
-    if(selectedIndexPath.item == 1){//绿幕抠图
+
+    // 根据类型显示或隐藏编辑按钮
+    if(_mattingType == FBMattingTypeChromaKeying){//绿幕抠图
         [UIView animateWithDuration:0.22 animations:^{
             [self.switchScreenView setAlpha:1];
         }];

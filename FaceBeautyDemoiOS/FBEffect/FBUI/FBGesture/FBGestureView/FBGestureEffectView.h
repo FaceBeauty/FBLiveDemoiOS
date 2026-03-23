@@ -23,6 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)updateGestureDataWithDict:(NSDictionary *)dic;
 
+/**
+ * 重置选中状态
+ */
+- (void)resetSelectedState;
+
 @end
 
 NS_ASSUME_NONNULL_END

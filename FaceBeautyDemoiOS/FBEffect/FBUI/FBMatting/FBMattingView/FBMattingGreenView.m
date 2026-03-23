@@ -215,7 +215,7 @@ typedef NS_ENUM(NSInteger, GreenType) {
             vc.allowsEditing = NO;
             
             [vc setViewWillDisappearBlock:^(void) {
-                [[FBUIManager shareManager] showMattingView];
+                [[FBUIManager shareManager] showMattingView:FBMattingTypeChromaKeying];
             }];
             [GetCurrentActivityViewController() presentViewController:vc animated:YES completion:nil];
             
@@ -234,8 +234,8 @@ typedef NS_ENUM(NSInteger, GreenType) {
             [collectionView reloadItemsAtIndexPaths:@[indexPath]];
             
             DownloadedType downloadedType = FB_DOWNLOAD_STATE_Greenscreen;
-            NSString *itemPath = [[[FaceBeauty shareInstance] getChromaKeyingPath] stringByAppendingFormat:@"fb_gsseg_effect_config.json"];
-            NSString *jsonKey = @"fb_gsseg_effect";
+            NSString *itemPath = [[[FaceBeauty shareInstance] getChromaKeyingPath] stringByAppendingFormat:@"gsseg_effect_config.json"];
+            NSString *jsonKey = @"gsseg_effect";
             
             self.downloadIndex = indexPath.row;
             
@@ -320,12 +320,12 @@ typedef NS_ENUM(NSInteger, GreenType) {
         }
     }
     
-    // 拷贝config.json文件到资源文件夹中
-    NSString *configPath = [filePath stringByAppendingPathComponent:@"config.json"];
+    // 拷贝config.json文件到资源文件夹中（从示例素材文件夹复制）
+    NSString *configPath = [filePath stringByAppendingPathComponent:@"gsseg_effect_ancientry/config.json"];
     NSString *configCopyToPath = [itmeFolder stringByAppendingPathComponent:@"config.json"];
     NSError *copyError;
     if (![[NSFileManager defaultManager] copyItemAtPath:configPath toPath:configCopyToPath error:&copyError]) {
-        [MJHUD showMessage:@"resouce copy failed"];
+        [MJHUD showMessage:[NSString stringWithFormat:@"config copy failed: %@", copyError.localizedDescription]];
         return;
     }
     
@@ -387,7 +387,7 @@ typedef NS_ENUM(NSInteger, GreenType) {
     // ht_gsseg_effect_config.json添加新增信息
     if (itmeImageResult == YES) {
         
-        NSString *configPath = [filePath stringByAppendingFormat:@"fb_gsseg_effect_config.json"];
+        NSString *configPath = [filePath stringByAppendingFormat:@"gsseg_effect_config.json"];
         
         NSMutableDictionary *newDic = [NSMutableDictionary dictionary];
         [newDic setValue:itmeName forKey:@"name"];
@@ -395,7 +395,7 @@ typedef NS_ENUM(NSInteger, GreenType) {
         [newDic setValue:iconName forKey:@"icon"];
         [newDic setValue:@2 forKey:@"download"];
         [self.listArray addObject:newDic];
-        [FBTool addWriteJsonDicFocKey:@"fb_gsseg_effect" newItme:newDic path:configPath];
+        [FBTool addWriteJsonDicFocKey:@"gsseg_effect" newItme:newDic path:configPath];
 //        NSLog(@"====== before = %@", self.listArr);
         [self.bgCollectionView reloadData];
     }else{
@@ -746,6 +746,38 @@ typedef NS_ENUM(NSInteger, GreenType) {
         _bgCollectionView.tag = GreenType_Background;
     }
     return _bgCollectionView;
+}
+
+#pragma mark - 重置选中状态
+- (void)resetSelectedState {
+    // 清除背景选中状态
+    for (int i = 0; i < self.listArray.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:self.listArray[i]];
+        if (model.selected) {
+            model.selected = NO;
+            [self.listArray replaceObjectAtIndex:i withObject:[FBTool getDictionaryWithFBModel:model]];
+        }
+    }
+
+    // 清除编辑选中状态
+    for (int i = 0; i < self.editArray.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:self.editArray[i]];
+        if (model.selected) {
+            model.selected = NO;
+            [self.editArray replaceObjectAtIndex:i withObject:[FBTool getDictionaryWithFBModel:model]];
+        }
+    }
+
+    // 重置选中模型
+    self.selectedModel = [[FBModel alloc] init];
+    self.editSelectedModel = [[FBModel alloc] initWithDic:self.editArray[0]];
+
+    // 刷新视图
+    [self.bgCollectionView reloadData];
+    [self.editCollectionView reloadData];
+
+    // 清除绿幕抠图效果
+    [[FaceBeauty shareInstance] setChromaKeyingScene:@""];
 }
 
 #pragma mark - 销毁

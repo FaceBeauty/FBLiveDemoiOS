@@ -19,7 +19,6 @@
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) FBModel *selectedModel;
-@property (nonatomic, strong) NSMutableArray *listArr;
 @property (nonatomic, assign) FBARItemType arItmeType;
 
 @property (nonatomic, strong) NSMutableDictionary *cellIdentifierDic;
@@ -124,6 +123,11 @@ static NSString *const FBARItemEffectViewCellId = @"FBARItemEffectViewCellId";
     return _editing;
 }
 
+-(void)setItemType:(FBARItemTypes)itemType{
+    _itemType = itemType;
+    self.arItmeType = (int)itemType;
+    [self.collectionView reloadData];
+}
 #pragma mark - CollectionView DataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.listArr.count;
@@ -203,8 +207,8 @@ static NSString *const FBARItemEffectViewCellId = @"FBARItemEffectViewCellId";
                 
             case FB_Gift:
                 downloadedType = FB_DOWNLOAD_TYPE_Gift;
-                arItemPath = [[[FaceBeauty shareInstance] getARItemPathBy:FBItemGift] stringByAppendingFormat:@"fb_gift_config.json"];
-                jsonKey = @"fb_gift";
+                arItemPath = [[[FaceBeauty shareInstance] getARItemPathBy:FBItemGift] stringByAppendingFormat:@"gift_config.json"];
+                jsonKey = @"gift";
                 break;
                 
             case FB_WaterMark:
@@ -265,6 +269,7 @@ static NSString *const FBARItemEffectViewCellId = @"FBARItemEffectViewCellId";
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [FBUIManager shareManager].superWindow.hidden = YES;
                 [[FBUIManager shareManager] cameraButtonShow:ShowNone];
+                [self removeFromSuperview];
             });
             
             QZImagePickerController *vc = [[QZImagePickerController alloc] init];
@@ -273,7 +278,7 @@ static NSString *const FBARItemEffectViewCellId = @"FBARItemEffectViewCellId";
             vc.allowsEditing = NO;
             
             [vc setViewWillDisappearBlock:^(void) {
-                [[FBUIManager shareManager] showARItemView];
+                [[FBUIManager shareManager] showARItemView:self.itemType];
             }];
             [GetCurrentActivityViewController() presentViewController:vc animated:YES completion:nil];
             
@@ -506,7 +511,7 @@ static NSString *const FBARItemEffectViewCellId = @"FBARItemEffectViewCellId";
         }
     }
     
-    BOOL itmeImageResult = [UIImagePNGRepresentation(image) writeToFile:[NSString stringWithFormat:@"%@/%@.png",itmeFolder,itmeName]   atomically:YES];
+    BOOL itmeImageResult = [UIImagePNGRepresentation(resultImage) writeToFile:[NSString stringWithFormat:@"%@/%@.png",itmeFolder,itmeName]   atomically:YES];
     if (itmeImageResult == YES) {
         
         NSString *configPath = [filePath stringByAppendingFormat:@"watermark_config.json"]; // 原始@"fb_watermark_config.json"

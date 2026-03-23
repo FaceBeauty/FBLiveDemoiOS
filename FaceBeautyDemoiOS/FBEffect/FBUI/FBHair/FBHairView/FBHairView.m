@@ -48,7 +48,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     
     self = [super initWithFrame:frame];
-    self.hairArray = [FBTool jsonModeForPath:[[NSBundle mainBundle] pathForResource:@"FBHair" ofType:@"json"] withKey:@"fb_hair"];
+    self.hairArray = [FBTool jsonModeForPath:[[NSBundle mainBundle] pathForResource:@"hairstyling_config" ofType:@"json"] withKey:@"hairstyling"];
     if (self) {
         // 获取文件路径
 //        stylePath = [[NSBundle mainBundle] pathForResource:@"FBStyleBeauty" ofType:@"json"];
@@ -93,7 +93,18 @@
         }];
         
         [self addSubview:self.sliderRelatedView];
-        [self.sliderRelatedView.sliderView setSliderType:self.currentModel.sliderType WithValue:[FBTool getFloatValueForKey:self.currentModel.key]];
+        // 初始化时也需要使用defaultValue逻辑
+        int initialValue = 0;
+        if (self.currentModel) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if ([defaults objectForKey:self.currentModel.key] == nil && self.currentModel.defaultValue > 0) {
+                initialValue = (int)self.currentModel.defaultValue;
+                [FBTool setFloatValue:initialValue forKey:self.currentModel.key];
+            } else {
+                initialValue = [FBTool getFloatValueForKey:self.currentModel.key];
+            }
+        }
+        [self.sliderRelatedView.sliderView setSliderType:self.currentModel.sliderType WithValue:initialValue];
         [self.sliderRelatedView setHidden:YES];
         [self.sliderRelatedView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.equalTo(self);
@@ -121,7 +132,7 @@
     if ([name isEqualToString:[FBTool isCurrentLanguageChinese] ? @"美发" : @"Hair"]) {
         self.menuView.disabled = NO;
         [self.hairView setHidden:YES];
-        
+
         //获取选中的位置
         int index = [FBTool getFloatValueForKey:FB_HAIR_SELECTED_POSITION];
         if (index == 0) {
@@ -131,13 +142,24 @@
             FBModel *model = [[FBModel alloc] initWithDic:self.hairArray[index]];
             self.currentModel = model;
 //                NSLog(@"======= %.2f ===== %@", [FBTool getFloatValueForKey:model.key], model.key);
-            [self.sliderRelatedView.sliderView setSliderType:FBSliderTypeI WithValue:[FBTool getFloatValueForKey:model.key]];
+
+            // 检查是否已存储过该值
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            int storedValue;
+            if ([defaults objectForKey:model.key] == nil && model.defaultValue > 0) {
+                storedValue = (int)model.defaultValue;
+                [FBTool setFloatValue:storedValue forKey:model.key];
+            } else {
+                storedValue = [FBTool getFloatValueForKey:model.key];
+            }
+
+            [self.sliderRelatedView.sliderView setSliderType:FBSliderTypeI WithValue:storedValue];
             [self.sliderRelatedView setHidden:NO];
         }
         self.currentType = FB_HAIR_SLIDER;
         [self.menuView.menuCollectionView reloadData];
         [self.hairView setHidden:NO];
-        
+
     }
     
     
@@ -271,7 +293,18 @@
                 [weakSelf.sliderRelatedView setHidden:NO];
             }
             weakSelf.currentModel = model;
-            [weakSelf.sliderRelatedView.sliderView setSliderType:FBSliderTypeI WithValue:[FBTool getFloatValueForKey:key]];
+
+            // 检查是否已存储过该值
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            int storedValue;
+            if ([defaults objectForKey:key] == nil && model.defaultValue > 0) {
+                storedValue = (int)model.defaultValue;
+                [FBTool setFloatValue:storedValue forKey:key];
+            } else {
+                storedValue = [FBTool getFloatValueForKey:key];
+            }
+
+            [weakSelf.sliderRelatedView.sliderView setSliderType:FBSliderTypeI WithValue:storedValue];
         };
     }
     return _hairView;

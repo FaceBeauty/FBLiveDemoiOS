@@ -15,7 +15,7 @@
             "icon": "ic_style_bailu.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -25,7 +25,7 @@
             "icon": "ic_style_gangfeng.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -35,7 +35,7 @@
             "icon": "ic_style_huximeiren.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -45,7 +45,7 @@
             "icon": "ic_style_lengdiao.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -55,7 +55,7 @@
             "icon": "ic_style_nvtuan.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -65,7 +65,7 @@
             "icon": "ic_style_qingchunbaihua.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -75,7 +75,7 @@
             "icon": "ic_style_qingtianzhuang.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         },
         {
@@ -85,7 +85,7 @@
             "icon": "ic_style_yuanqishaonv.png",
             "category": "default",
             "download": 2,
-            "defaultValue":50,
+            "defaultValue":70,
             "sliderType":1
         }
     ]

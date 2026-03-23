@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBUIConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FBARItemView : UIView
 
+@property (nonatomic, assign) FBARItemTypes type;
 @end
 
 NS_ASSUME_NONNULL_END

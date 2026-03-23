@@ -289,5 +289,25 @@
     return _bodyCollectionView;
 }
 
+#pragma mark - 重置选中状态
+- (void)resetSelectedState {
+    // 清除所有项的 selected 状态
+    for (int i = 0; i < self.bodyArray.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:self.bodyArray[i]];
+        if (model.selected) {
+            model.selected = NO;
+            [self.bodyArray replaceObjectAtIndex:i withObject:[FBTool getDictionaryWithFBModel:model]];
+        }
+    }
+
+    // 默认选择第一个
+    FBModel *firstModel = [[FBModel alloc] initWithDic:self.bodyArray[0]];
+    firstModel.selected = YES;
+    [self.bodyArray replaceObjectAtIndex:0 withObject:[FBTool getDictionaryWithFBModel:firstModel]];
+    self.selectedModel = firstModel;
+
+    // 刷新CollectionView
+    [self.bodyCollectionView reloadData];
+}
 
 @end

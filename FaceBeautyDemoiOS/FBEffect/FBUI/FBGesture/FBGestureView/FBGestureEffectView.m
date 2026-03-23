@@ -215,9 +215,26 @@
 
 #pragma mark - 外部点击menu选项后刷新CollectionView
 - (void)updateGestureDataWithDict:(NSDictionary *)dic {
-    
-    
+
+
 }
 
+#pragma mark - 重置选中状态
+- (void)resetSelectedState {
+    // 清除选中的模型
+    self.selectedModel = [[FBModel alloc] init];
+
+    // 遍历 listArr，将所有项的 selected 设置为 false
+    for (int i = 0; i < self.listArr.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:self.listArr[i]];
+        if (model.selected) {
+            model.selected = false;
+            [self.listArr replaceObjectAtIndex:i withObject:[FBTool getDictionaryWithFBModel:model]];
+        }
+    }
+
+    // 刷新CollectionView
+    [self.collectionView reloadData];
+}
 
 @end

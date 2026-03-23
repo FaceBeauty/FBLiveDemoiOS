@@ -64,21 +64,21 @@
             make.left.right.bottom.equalTo(self);
             make.height.mas_equalTo(kContainerHeightBody+kSafeAreaBottom);
         }];
-        [self.containerView addSubview:self.menuView];
-        [self.menuView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.right.equalTo(self.containerView);
-            make.height.mas_equalTo(kMenuViewHeight);
-        }];
-        [self.containerView addSubview:self.lineView];
-        [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.containerView);
-            make.top.equalTo(self.menuView.mas_bottom);
-            make.height.mas_equalTo(0.5);
-        }];
+//        [self.containerView addSubview:self.menuView];
+//        [self.menuView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.left.right.equalTo(self.containerView);
+//            make.height.mas_equalTo(kMenuViewHeight);
+//        }];
+//        [self.containerView addSubview:self.lineView];
+//        [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.equalTo(self.containerView);
+//            make.top.equalTo(self.menuView.mas_bottom);
+//            make.height.mas_equalTo(0.5);
+//        }];
         
         [self.containerView addSubview:self.bodyView];
         [self.bodyView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.lineView.mas_bottom).offset(FBHeight(23));
+            make.top.equalTo(self.containerView).offset(FBHeight(23)+kMenuViewHeight);
             make.left.right.equalTo(self.containerView);
             make.height.mas_equalTo(FBHeight(82));
 //            make.bottom.equalTo(self.containerView);
@@ -281,6 +281,11 @@
         [_confirmLabel setHidden:YES];
     }
     return _confirmLabel;
+}
+
+#pragma mark - 重置选中状态
+- (void)resetSelectedState {
+    [self.bodyView resetSelectedState];
 }
 
 @end

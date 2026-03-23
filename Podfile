@@ -6,5 +6,5 @@ target 'FaceBeautyDemoiOS' do
   use_frameworks!
 
   # Pods for FaceBeautyDemoiOS
-  pod 'FaceBeauty','4.3.0'
+  pod 'FaceBeauty','5.0.0'
 end

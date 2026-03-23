@@ -36,7 +36,7 @@
 }
 
 - (instancetype)initWithFrame:(CGRect)frame listArr:(NSArray *)listArr{
-    
+
     self = [super initWithFrame:frame];
     if (self) {
         self.listArr = [listArr mutableCopy];
@@ -46,13 +46,22 @@
         model.selected = YES;
         [self.listArr replaceObjectAtIndex:index withObject:[FBTool getDictionaryWithFBModel:model]];
         self.selectedModel = model;
+
+        // 如果选中的不是原图，初始化为defaultValue（如果UserDefaults中没有值）
+        if (model.idCard > 0) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if ([defaults objectForKey:model.key] == nil && model.defaultValue > 0) {
+                [FBTool setFloatValue:(int)model.defaultValue forKey:model.key];
+            }
+        }
+
         [self addSubview:self.collectionView];
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.right.bottom.height.equalTo(self);
         }];
     }
     return self;
-    
+
 }
 
 #pragma mark ---UICollectionViewDataSource---
@@ -80,10 +89,10 @@
 };
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+
     FBModel *indexModel = [[FBModel alloc] initWithDic:self.listArr[indexPath.row]];
     if (self.selectedModel.idCard == indexModel.idCard) return;
-    
+
     indexModel.selected = YES;
     [self.listArr replaceObjectAtIndex:indexPath.row withObject:[FBTool getDictionaryWithFBModel:indexModel]];
     self.selectedModel.selected = NO;
@@ -93,13 +102,26 @@
     self.selectedModel = indexModel;
 //    NSString *key = [@"FB_HAIR_SLIDER" stringByAppendingFormat:@"%ld",(long)indexPath.row];
 //    NSLog(@"========%d === %.2f", self.selectedModel.idCard, [FBTool getFloatValueForKey:indexModel.key]);
-    [[FaceBeauty shareInstance] setHairStyling:self.selectedModel.idCard value:[FBTool getFloatValueForKey:indexModel.key]];
+
+    // 检查是否已存储过该值（区分"未设置"和"设置为0"）
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    int storedValue;
+    if ([defaults objectForKey:indexModel.key] == nil && indexModel.defaultValue > 0) {
+        // 第一次使用，初始化为defaultValue
+        storedValue = (int)indexModel.defaultValue;
+        [FBTool setFloatValue:storedValue forKey:indexModel.key];
+    } else {
+        // 已经设置过，使用存储的值（即使是0也保留）
+        storedValue = [FBTool getFloatValueForKey:indexModel.key];
+    }
+
+    [[FaceBeauty shareInstance] setHairStyling:self.selectedModel.idCard value:storedValue];
     if (self.beautyHairBlock) {
         self.beautyHairBlock(self.selectedModel, indexModel.key);
     }
     //保存美发的选中位置
     [FBTool setFloatValue:indexPath.row forKey:FB_HAIR_SELECTED_POSITION];
-    
+
 }
 
 // 通过name返回在数组中的位置

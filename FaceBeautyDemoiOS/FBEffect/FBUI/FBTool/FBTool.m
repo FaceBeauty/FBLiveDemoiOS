@@ -391,13 +391,46 @@
     // 缓存
     [FBTool setFloatValue:-1 forKey:FB_ARITEM_STICKER_POSITION];
     [FBTool setFloatValue:-1 forKey:FB_ARITEM_MASK_POSITION];
-//    [FBTool setFloatValue:-1 forKey:FB_ARITEM_GIFT_POSITION];
+    [FBTool setFloatValue:-1 forKey:FB_ARITEM_GIFT_POSITION];
     [FBTool setFloatValue:-1 forKey:FB_ARITEM_WATERMARK_POSITION];
     // 效果
     [[FaceBeauty shareInstance] setARItem:FBItemSticker name:@""];
     [[FaceBeauty shareInstance] setARItem:FBItemMask name:@""];
-//    [[FaceBeauty shareInstance] setARItem:FBItemGift name:@""];
+    [[FaceBeauty shareInstance] setARItem:FBItemGift name:@""];
     [[FaceBeauty shareInstance] setARItem:FBItemWatermark name:@""];
+    
+    /********** 手势特效 **********/
+    // 缓存
+    [FBTool setFloatValue:0 forKey:FB_GESTURE_SELECTED_POSITION];
+    // 效果
+    [[FaceBeauty shareInstance] setGestureEffect:@""];
+
+    /********** 美体 **********/
+    NSArray *bodyArray = [FBTool jsonModeForPath:FBBodyBeautyPath withKey:@"FBBodyBeauty"];
+    for (int i = 0; i < bodyArray.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:bodyArray[i]];
+        [FBTool setFloatValue:model.defaultValue forKey:model.key];
+        [[FaceBeauty shareInstance] setBodyBeauty:model.idCard value:(int)model.defaultValue];
+    }
+
+    /********** AI抠图（人像分割、绿幕抠图） **********/
+    // 缓存
+    [FBTool setFloatValue:0 forKey:FB_MATTING_AI_POSITION];
+    [FBTool setFloatValue:0 forKey:FB_MATTING_GS_POSITION];
+    [FBTool setFloatValue:0 forKey:FB_MATTING_SWITCHSCREEN_POSITION];
+
+    // 效果
+    [[FaceBeauty shareInstance] setAISegEffect:@""];
+    [[FaceBeauty shareInstance] setChromaKeyingScene:@""];
+    [[FaceBeauty shareInstance] setChromaKeyingCurtain:FBMattingScreenGreen];
+
+    // 绿幕抠图编辑参数重置为默认值
+    NSArray *greenEditArray = [FBTool jsonModeForPath:[[NSBundle mainBundle] pathForResource:@"FBMattingEdit" ofType:@"json"] withKey:@"fb_matting_edit"];
+    for (int i = 0; i < greenEditArray.count; i++) {
+        FBModel *model = [[FBModel alloc] initWithDic:greenEditArray[i]];
+        [FBTool setFloatValue:model.defaultValue forKey:model.key];
+        [[FaceBeauty shareInstance] setChromaKeyingParams:(int)model.idCard value:(int)model.defaultValue];
+    }
 
     /********** 滤镜 **********/
     // 滤镜(特效、哈哈镜)
